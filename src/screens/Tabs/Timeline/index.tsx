@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator<TabTimelineParamList>()
 
 const TabProfile: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Tab-Timeline-Root' component={Root} />
     </Stack.Navigator>
   )

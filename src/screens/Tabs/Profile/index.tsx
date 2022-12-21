@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator<TabProfileParamList>()
 
 const TabProfile: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Tab-Profile-Root' component={Root} />
     </Stack.Navigator>
   )

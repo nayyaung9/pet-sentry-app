@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const ApplicationNavigator = () => {
   return (
     <>
-      <StatusBar backgroundColor={'#000'} barStyle={'light-content'} />
+      <StatusBar backgroundColor={'#faa7ca'} barStyle={'light-content'} />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Screen-Tabs">
           <Stack.Screen

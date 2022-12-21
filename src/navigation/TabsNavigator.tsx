@@ -15,7 +15,7 @@ const ScreenTabs: React.FC = () => {
       initialRouteName={'Tab-Timeline'}
       screenOptions={({route}) => ({
         headerShown: false,
-        tabBarActiveTintColor: '#f00',
+        tabBarActiveTintColor: '#faa7ca',
         tabBarInactiveTintColor: '#ddd',
         tabBarShowLabel: false,
         tabBarIcon: ({

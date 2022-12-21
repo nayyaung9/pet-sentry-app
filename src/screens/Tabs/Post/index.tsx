@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator<TabPostParamList>()
 
 const TabPost: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Tab-Post-Root' component={Root} />
     </Stack.Navigator>
   )
