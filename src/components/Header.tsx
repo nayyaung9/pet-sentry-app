@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {StyleConstants} from '~utils/styles/constants';
+import ThemeText from './widgets/ThemeText';
 
 const Header = () => {
   return (
@@ -11,8 +12,7 @@ const Header = () => {
           padding: StyleConstants.Spacing.M,
         },
       ]}>
-      <Text>Back</Text>
-      <Text>Back</Text>
+      <ThemeText fontStyle={'L'} style={{ color: '#fff' }}>Pet Sentry</ThemeText>
       <Text>Back</Text>
     </View>
   );

@@ -16,6 +16,7 @@ const ContainerLayout: React.FC<ContainerLayoutProps> = ({
       {header}
       <View
         style={{
+          flex: 1,
           padding: StyleConstants.Spacing.Global.PagePadding,
         }}>
         {children}
