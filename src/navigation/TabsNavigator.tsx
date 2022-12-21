@@ -1,10 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ScreenTabsStackParamList} from '~utils/navigation/navigators';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import TabTimeline from '~screens/Tabs/Timeline';
 import TabPost from '~screens/Tabs/Post';
 import TabProfile from '~screens/Tabs/Profile';
-import {Image} from 'react-native';
 
 const Tab = createBottomTabNavigator<ScreenTabsStackParamList>();
 
@@ -16,7 +17,7 @@ const ScreenTabs: React.FC = () => {
         headerShown: false,
         tabBarActiveTintColor: '#f00',
         tabBarInactiveTintColor: '#ddd',
-        // tabBarShowLabel: false,
+        tabBarShowLabel: false,
         tabBarIcon: ({
           focused,
           color,
@@ -29,38 +30,30 @@ const ScreenTabs: React.FC = () => {
           switch (route.name) {
             case 'Tab-Timeline':
               return (
-                <Image
-                  source={{
-                    uri: 'https://avatars.githubusercontent.com/u/45455924?s=40&v=4',
-                  }}
-                  style={{width: 24, height: 24}}
-                />
-              );
-            case 'Tab-Profile':
-              return (
-                <Image
-                  source={{
-                    uri: 'https://avatars.githubusercontent.com/u/45455924?s=40&v=4',
-                  }}
-                  style={{width: 24, height: 24}}
+                <MaterialCommunityIcons
+                  name={focused ? 'timeline' : 'timeline-outline'}
+                  {...{size, color}}
                 />
               );
             case 'Tab-Post':
               return (
-                <Image
-                  source={{
-                    uri: 'https://avatars.githubusercontent.com/u/45455924?s=40&v=4',
-                  }}
-                  style={{width: 24, height: 24}}
+                <MaterialCommunityIcons
+                  name={focused ? 'shield-edit' : 'shield-edit-outline'}
+                  {...{size, color}}
+                />
+              );
+            case 'Tab-Profile':
+              return (
+                <MaterialCommunityIcons
+                  name={focused ? 'account' : 'account-outline'}
+                  {...{size, color}}
                 />
               );
             default:
               return (
-                <Image
-                  source={{
-                    uri: 'https://avatars.githubusercontent.com/u/45455924?s=40&v=4',
-                  }}
-                  style={{width: 24, height: 24}}
+                <MaterialCommunityIcons
+                  name={focused ? 'timeline' : 'timeline-outline'}
+                  {...{size, color}}
                 />
               );
           }
