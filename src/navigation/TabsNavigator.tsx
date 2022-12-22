@@ -7,15 +7,18 @@ import TabTimeline from '~screens/Tabs/Timeline';
 import TabPost from '~screens/Tabs/Post';
 import TabProfile from '~screens/Tabs/Profile';
 
+import { useTheme } from '~utils/styles/ThemeManager';
+
 const Tab = createBottomTabNavigator<ScreenTabsStackParamList>();
 
 const ScreenTabs: React.FC = () => {
+  const { colors } = useTheme();
   return (
     <Tab.Navigator
       initialRouteName={'Tab-Timeline'}
       screenOptions={({route}) => ({
         headerShown: false,
-        tabBarActiveTintColor: '#faa7ca',
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: '#ddd',
         tabBarShowLabel: false,
         tabBarIcon: ({

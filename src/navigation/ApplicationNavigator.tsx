@@ -4,13 +4,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from '~utils/navigation/navigators';
 import ScreenTabs from './TabsNavigator';
+import { useTheme } from '~utils/styles/ThemeManager';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const ApplicationNavigator = () => {
+  const { colors } = useTheme();
   return (
     <>
-      <StatusBar backgroundColor={'#faa7ca'} barStyle={'light-content'} />
+      <StatusBar backgroundColor={colors.primary} barStyle={'light-content'} />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Screen-Tabs">
           <Stack.Screen
