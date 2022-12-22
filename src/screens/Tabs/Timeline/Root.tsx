@@ -2,22 +2,21 @@ import React from 'react';
 import {View, useWindowDimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import Header from '~components/Header';
-import { useTheme } from '~utils/styles/ThemeManager';
+import TimelineContainer from '~components/Timeline/TimelineContainer';
+import ThemeText from '~components/widgets/ThemeText';
+import {useTheme} from '~utils/styles/ThemeManager';
 
-const FirstRoute = () => <View style={{flex: 1, backgroundColor: '#F9FCFF'}} />;
-
-const SecondRoute = () => (
-  <View style={{flex: 1, backgroundColor: '#fff'}} />
-);
-
+const Route = ({route: {key}}: {route: any}) => {
+  return <TimelineContainer key={key} />;
+};
 const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
+  first: Route,
+  second: Route,
 });
 
 const TimelineRoot: React.FC = () => {
   const layout = useWindowDimensions();
-  const { colors } = useTheme();
+  const {colors} = useTheme();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -30,6 +29,9 @@ const TimelineRoot: React.FC = () => {
       {...props}
       indicatorStyle={{backgroundColor: 'white'}}
       style={{backgroundColor: colors.primary}}
+      renderLabel={({route, color}) => (
+        <ThemeText style={{color, textTransform: "uppercase"}}>{route.title}</ThemeText>
+      )}
     />
   );
 
@@ -37,6 +39,7 @@ const TimelineRoot: React.FC = () => {
     <>
       <Header />
       <TabView
+        lazy
         navigationState={{index, routes}}
         renderTabBar={renderTabBar}
         renderScene={renderScene}
