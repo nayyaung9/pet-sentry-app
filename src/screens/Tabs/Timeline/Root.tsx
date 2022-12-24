@@ -37,7 +37,7 @@ const TimelineRoot: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header title={'Pet Sentry'} />
       <TabView
         lazy
         navigationState={{index, routes}}

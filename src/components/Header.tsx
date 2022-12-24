@@ -4,7 +4,10 @@ import {StyleConstants} from '~utils/styles/constants';
 import ThemeText from './widgets/ThemeText';
 import {useTheme} from '~utils/styles/ThemeManager';
 
-const Header = () => {
+interface HeaderProps {
+  title: string
+}
+const Header = ({ title }: HeaderProps) => {
   const {colors} = useTheme();
   return (
     <View
@@ -16,7 +19,7 @@ const Header = () => {
         },
       ]}>
       <ThemeText fontStyle={'L'} style={{color: '#fff'}}>
-        Pet Sentry
+        {title}
       </ThemeText>
       <Text>Back</Text>
     </View>
