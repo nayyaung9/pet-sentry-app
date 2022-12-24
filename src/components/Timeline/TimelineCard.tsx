@@ -1,11 +1,16 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 import ThemeText from '~components/widgets/ThemeText';
 import FastImage from 'react-native-fast-image';
+import {useNavigation} from '@react-navigation/native';
+import {TabTimelineParamList} from '~utils/navigation/navigators';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 const TimelineCard = ({item}: {item: any}) => {
+  const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Tab-Timeline-Detail')}
       style={{
         marginBottom: 8,
         backgroundColor: '#fff',
@@ -26,13 +31,11 @@ const TimelineCard = ({item}: {item: any}) => {
         }}
         resizeMode={FastImage.resizeMode.cover}
       />
-      <View style={{ padding: 8 }}>
-        
-      <ThemeText fontStyle="M">{item?.name}</ThemeText>
-      <ThemeText fontStyle={'S'}>{item?.createdAt}</ThemeText>
-      
+      <View style={{padding: 8}}>
+        <ThemeText fontStyle="M">{item?.name}</ThemeText>
+        <ThemeText fontStyle={'S'}>{item?.createdAt}</ThemeText>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

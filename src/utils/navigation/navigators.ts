@@ -14,6 +14,7 @@ export type ScreenTabsStackParamList = {
 // Tabs
 export type TabTimelineParamList = {
   'Tab-Timeline-Root': undefined
+  'Tab-Timeline-Detail': undefined
 }
 export type TabPostParamList = {
   'Tab-Post-Root': undefined
