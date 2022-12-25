@@ -10,7 +10,11 @@ const TimelineCard = ({item}: {item: any}) => {
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Tab-Timeline-Detail')}
+      onPress={() =>
+        navigation.navigate('Tab-Timeline-Detail', {
+          pet: item,
+        })
+      }
       style={{
         marginBottom: 8,
         backgroundColor: '#fff',

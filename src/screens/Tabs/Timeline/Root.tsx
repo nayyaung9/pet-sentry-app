@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, useWindowDimensions} from 'react-native';
+import {useWindowDimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import Header from '~components/Header';
 import TimelineContainer from '~components/Timeline/TimelineContainer';
 import ThemeText from '~components/widgets/ThemeText';
 import {useTheme} from '~utils/styles/ThemeManager';
@@ -30,23 +29,22 @@ const TimelineRoot: React.FC = () => {
       indicatorStyle={{backgroundColor: 'white'}}
       style={{backgroundColor: colors.primary}}
       renderLabel={({route, color}) => (
-        <ThemeText style={{color, textTransform: "uppercase"}}>{route.title}</ThemeText>
+        <ThemeText style={{color, textTransform: 'uppercase'}}>
+          {route.title}
+        </ThemeText>
       )}
     />
   );
 
   return (
-    <>
-      <Header title={'Pet Sentry'} />
-      <TabView
-        lazy
-        navigationState={{index, routes}}
-        renderTabBar={renderTabBar}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{width: layout.width}}
-      />
-    </>
+    <TabView
+      lazy
+      navigationState={{index, routes}}
+      renderTabBar={renderTabBar}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{width: layout.width}}
+    />
   );
 };
 
