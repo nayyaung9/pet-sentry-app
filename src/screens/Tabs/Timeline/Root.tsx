@@ -29,7 +29,7 @@ const TimelineRoot: React.FC = () => {
       indicatorStyle={{backgroundColor: 'white'}}
       style={{backgroundColor: colors.primary}}
       renderLabel={({route, color}) => (
-        <ThemeText style={{color, textTransform: 'uppercase'}}>
+        <ThemeText style={{textTransform: 'uppercase'}} color={color}>
           {route.title}
         </ThemeText>
       )}
