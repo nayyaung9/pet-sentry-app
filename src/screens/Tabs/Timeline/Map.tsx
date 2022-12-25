@@ -1,13 +1,17 @@
-import React from 'react';
-import { View } from 'react-native';
-import ThemeText from '~components/widgets/ThemeText';
+import React, {useState} from 'react';
+import MapView from 'react-native-maps';
+import mapStyles from './mapStyles.json';
 
 const Map = () => {
+  const [region] = useState({
+    latitude: 16.833734,
+    longitude: 96.167805,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
   return (
-    <View>
-      <ThemeText>Map View</ThemeText>
-    </View>
-  )
-}
+    <MapView style={{flex: 1}} region={region} customMapStyle={mapStyles} />
+  );
+};
 
 export default Map;

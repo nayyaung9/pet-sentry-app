@@ -16,6 +16,7 @@ export type TabTimelineParamList = {
   'Tab-Timeline-Detail': {
     pet: {id: number; name: string; createdAt: string};
   };
+  'Tab-Timeline-Map': undefined;
 };
 export type TabPostParamList = {
   'Tab-Post-Root': undefined;
