@@ -2,7 +2,12 @@ import {DefaultTheme, DarkTheme} from '@react-navigation/native';
 
 export type Theme = 'light' | 'dark';
 
-export type ColorDefinitions = 'primary' | 'background';
+export type ColorDefinitions =
+  | 'primary'
+  | 'background'
+  | 'buttonDisable'
+  | 'textDisable'
+  | 'textWhite';
 
 const themeColors: {
   [key in ColorDefinitions]: {
@@ -17,6 +22,18 @@ const themeColors: {
   background: {
     light: '#F9FCFF',
     dark: '#F9FCFF',
+  },
+  buttonDisable: {
+    light: '#D3D3D3',
+    dark: '#D3D3D3',
+  },
+  textDisable: {
+    light: '#eee',
+    dark: '#ddd',
+  },
+  textWhite: {
+    light: '#fff',
+    dark: '#282828',
   },
 };
 

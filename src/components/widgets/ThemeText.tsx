@@ -10,6 +10,7 @@ type Props =
       lineHeight?: 'S' | 'M' | 'L';
       fontWeight?: 'Regular' | 'Light' | 'Medium' | 'Bold';
       textTransform?: 'Lowercase' | 'Capitalize' | 'Uppercase';
+      color?: string;
     }
   | {
       style?: Omit<TextStyle, 'fontSize' | 'lineHeight' | 'fontWeight'>;
@@ -18,6 +19,7 @@ type Props =
       lineHeight?: undefined;
       fontWeight?: 'Regular' | 'Light' | 'Medium' | 'Bold';
       textTransform?: 'Lowercase' | 'Capitalize' | 'Uppercase';
+      color?: string;
     };
 
 const ThemeText: React.FC<Props & TextProps> = ({
@@ -25,6 +27,7 @@ const ThemeText: React.FC<Props & TextProps> = ({
   fontStyle,
   style,
   fontWeight = 'Regular',
+  color = '#000',
 }) => {
   return (
     <Text
@@ -32,6 +35,7 @@ const ThemeText: React.FC<Props & TextProps> = ({
         style,
         {...(fontWeight && StyleConstants.Font[fontWeight])},
         {...(fontStyle && StyleConstants.FontStyle[fontStyle])},
+        {...{color}},
       ]}
       children={children}
     />

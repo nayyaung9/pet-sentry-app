@@ -1,14 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import ContainerLayout from '~components/ContainerLayout';
-import Header from '~components/Header';
+import {Text, View} from 'react-native';
 
 const Post: React.FC = () => {
   return (
-    <ContainerLayout header={<Header title="Post" />}>
+    <View>
       <Text>Post Stack Screen</Text>
-    </ContainerLayout>
-  )
-}
+    </View>
+  );
+};
 
 export default Post;

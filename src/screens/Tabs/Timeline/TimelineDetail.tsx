@@ -1,21 +1,25 @@
 import React from 'react';
 import {
   Dimensions,
-  Image,
   ImageBackground,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
+import Button from '~components/widgets/Button';
 import ThemeText from '~components/widgets/ThemeText';
+
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
+import {TabTimelineParamList} from '~utils/navigation/navigators';
 
 const DEVICE = Dimensions.get('window');
 
 const TimelineDetail = () => {
   const {colors} = useTheme();
+  const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
   return (
     <ScrollView
       style={{flex: 1, backgroundColor: colors.background}}
@@ -58,6 +62,12 @@ const TimelineDetail = () => {
           they always wear identification tags. If a pet does become lost, it is
           important to act quickly to try to locate them and to reach
         </ThemeText>
+
+        <Button
+          title="View on Map"
+          icon={'md-map'}
+          onPress={() => navigation.navigate('Tab-Timeline-Map')}
+        />
       </View>
     </ScrollView>
   );
