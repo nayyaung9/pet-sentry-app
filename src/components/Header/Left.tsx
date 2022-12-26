@@ -1,5 +1,5 @@
 import {StyleConstants} from '~utils/styles/constants';
-import React, {useMemo} from 'react';
+import React, {CSSProperties, useMemo} from 'react';
 import {Pressable} from 'react-native';
 import ThemeText from '~components/widgets/ThemeText';
 import {useTheme} from '~utils/styles/ThemeManager';
@@ -12,6 +12,7 @@ export interface Props {
   background?: string;
   rounded?: boolean;
   onPress: () => void;
+  color?: CSSProperties["color"]
 }
 
 const HeaderLeft: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const HeaderLeft: React.FC<Props> = ({
   background,
   rounded = false,
   onPress,
+  color,
 }) => {
   const {colors, theme} = useTheme();
 
@@ -31,14 +33,14 @@ const HeaderLeft: React.FC<Props> = ({
           <Ionicons
             name={content || 'md-arrow-back'}
             size={24}
-            color={colors.primary}
+            color={color || colors.primary}
           />
         );
       case 'text':
         return (
           <ThemeText
             fontStyle="M"
-            style={{color: colors.primary}}
+            style={{color: color || colors.primary}}
             children={content}
           />
         );
