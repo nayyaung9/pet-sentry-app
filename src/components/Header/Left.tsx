@@ -9,8 +9,8 @@ export interface Props {
   type?: 'icon' | 'text';
   content?: string;
   native?: boolean;
-  background?: boolean;
-
+  background?: string;
+  rounded?: boolean;
   onPress: () => void;
 }
 
@@ -18,7 +18,8 @@ const HeaderLeft: React.FC<Props> = ({
   type = 'icon',
   content,
   native = true,
-  background = false,
+  background,
+  rounded = false,
   onPress,
 }) => {
   const {colors, theme} = useTheme();
@@ -27,7 +28,11 @@ const HeaderLeft: React.FC<Props> = ({
     switch (type) {
       case 'icon':
         return (
-          <Ionicons name={content || 'md-arrow-back'} size={24} color={colors.primary} />
+          <Ionicons
+            name={content || 'md-arrow-back'}
+            size={24}
+            color={colors.primary}
+          />
         );
       case 'text':
         return (
@@ -48,7 +53,7 @@ const HeaderLeft: React.FC<Props> = ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: background ? colors.background : undefined,
+        backgroundColor: background ? background : 'transparent',
         minHeight: 44,
         minWidth: 44,
         marginLeft: native
@@ -57,6 +62,7 @@ const HeaderLeft: React.FC<Props> = ({
         ...(type === 'text' && {
           paddingHorizontal: StyleConstants.Spacing.S,
         }),
+        ...(rounded && {borderRadius: 100}),
       }}
     />
   );

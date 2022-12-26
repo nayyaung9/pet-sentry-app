@@ -35,10 +35,8 @@ const TabProfile: React.FC = () => {
       <Stack.Screen
         name="Tab-Timeline-Detail"
         component={TimelineDetail}
-        options={({navigation, route: {params}}: any) => ({
-          headerShadowVisible: false,
-          title: params?.pet?.name,
-          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />,
+        options={({navigation}: any) => ({
+          headerShown: false,
         })}
       />
       <Stack.Screen

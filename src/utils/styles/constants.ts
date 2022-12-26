@@ -17,7 +17,8 @@ export const StyleConstants = {
     XS: { fontSize: 12, lineHeight: 18 },
     S: { fontSize: 14, lineHeight: 20 },
     M: { fontSize: 16, lineHeight: 22 },
-    L: { fontSize: 20, lineHeight: 28 },
+    L: { fontSize: 18, lineHeight: 28 },
+    XL: { fontSize: 20, lineHeight: 30 },
   },
 
   Spacing: {

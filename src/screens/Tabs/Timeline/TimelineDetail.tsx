@@ -14,6 +14,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
 import {TabTimelineParamList} from '~utils/navigation/navigators';
+import HeaderLeft from '~components/Header/Left';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const DEVICE = Dimensions.get('window');
 
@@ -24,6 +26,14 @@ const TimelineDetail = () => {
     <ScrollView
       style={{flex: 1, backgroundColor: colors.background}}
       showsVerticalScrollIndicator={false}>
+      <View style={styles.header}>
+        <HeaderLeft
+          content={'md-arrow-back'}
+          onPress={() => navigation.goBack()}
+          background={'rgba(255, 255, 255, 0.6)'}
+          rounded
+        />
+      </View>
       <ImageBackground
         style={styles.petImageContainer}
         source={require('~assets/images/pet_demo.jpg')}
@@ -35,14 +45,12 @@ const TimelineDetail = () => {
           <ThemeText>Lu Soe Kg</ThemeText>
         </View>
         <View style={styles.petInfoCardRow}>
-          <ThemeText>Tarmwe, Yangon</ThemeText>
-          <ThemeText>Lu Soe Kg</ThemeText>
+          <ThemeText>
+            <Ionicons name="md-location" color={'#555'} />
+            Tarmwe, Yangon
+          </ThemeText>
         </View>
-        <View style={styles.petInfoCardRow}>
-          <ThemeText>Lu Soe Kg</ThemeText>
-          <ThemeText>Lu Soe Kg</ThemeText>
-        </View>
-        <ThemeText>Description</ThemeText>
+        <ThemeText fontStyle={'L'}>Description</ThemeText>
         <ThemeText>
           escape from their homes or yards, get lost during a move or vacation,
           or become separated from their owners during a natural disaster or
@@ -52,15 +60,6 @@ const TimelineDetail = () => {
           keeping them securely contained at home and on a leash when outside,
           microchipping them, and ensuring that they always wear identification
           tags. If a pet does become lost, it is important to act quickly to try
-          to locate them and to reach becoming lost, such as keeping them
-          securely contained at home and on a leash when outside, microchipping
-          them, and ensuring that they always wear identification tags. If a pet
-          does become lost, it is important to act quickly to try to locate them
-          and to reach important to act quickly to try to locate them and to
-          reach becoming lost, such as keeping them securely contained at home
-          and on a leash when outside, microchipping them, and ensuring that
-          they always wear identification tags. If a pet does become lost, it is
-          important to act quickly to try to locate them and to reach
         </ThemeText>
 
         <Button
@@ -74,6 +73,17 @@ const TimelineDetail = () => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    top: 8,
+    width: '100%',
+    zIndex: 9,
+    paddingHorizontal: 16,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   petImageContainer: {
     width: '100%',
     height: DEVICE.height / 2,
@@ -82,6 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: StyleConstants.Spacing.XS
   },
   contentContainer: {
     flexGrow: 1,

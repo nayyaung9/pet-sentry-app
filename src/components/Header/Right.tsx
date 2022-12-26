@@ -54,7 +54,7 @@ const HeaderRight: React.FC<Props> = ({
       case 'icon':
         return (
           <>
-            <Ionicons name={content} size={24} color={'#fff'} />
+            <Ionicons name={content} size={24} color={colors.primary} />
           </>
         );
       case 'text':
@@ -91,6 +91,9 @@ const HeaderRight: React.FC<Props> = ({
         marginRight: native
           ? -StyleConstants.Spacing.S
           : StyleConstants.Spacing.S,
+        ...(type === 'icon' && {
+          borderRadius: 100,
+        }),
         ...(type === 'text' && {
           paddingHorizontal: StyleConstants.Spacing.S,
         }),
