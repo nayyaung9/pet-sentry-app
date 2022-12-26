@@ -7,7 +7,8 @@ export type ColorDefinitions =
   | 'background'
   | 'buttonDisable'
   | 'textDisable'
-  | 'textWhite';
+  | 'textWhite'
+  | 'textSecondary';
 
 const themeColors: {
   [key in ColorDefinitions]: {
@@ -16,11 +17,12 @@ const themeColors: {
   };
 } = {
   primary: {
-    light: '#ec417a',
+    // light: '#ec417a',
+    light: '#9f73fe',
     dark: '#282828',
   },
   background: {
-    light: '#F9FCFF',
+    light: '#f4f4f4',
     dark: '#F9FCFF',
   },
   buttonDisable: {
@@ -34,6 +36,10 @@ const themeColors: {
   textWhite: {
     light: '#fff',
     dark: '#282828',
+  },
+  textSecondary: {
+    light: '#9e9e9e',
+    dark: '#9e9e9e',
   },
 };
 

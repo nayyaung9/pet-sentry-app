@@ -14,7 +14,7 @@ type Props =
     }
   | {
       style?: Omit<TextStyle, 'fontSize' | 'lineHeight' | 'fontWeight'>;
-      fontStyle: 'S' | 'M' | 'L';
+      fontStyle: 'XS' | 'S' | 'M' | 'L';
       fontSize?: undefined;
       lineHeight?: undefined;
       fontWeight?: 'Regular' | 'Light' | 'Medium' | 'Bold';

@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {StyleConstants} from '~utils/styles/constants';
 
 interface ContainerLayoutProps {
-  header: React.ReactNode;
+  header?: React.ReactNode;
   children: React.ReactNode;
 }
 

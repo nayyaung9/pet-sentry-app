@@ -1,11 +1,15 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import ContainerLayout from '~components/ContainerLayout';
+import PinMyPet from '~components/PinMyPet';
+import ThemeText from '~components/widgets/ThemeText';
 
 const Profile: React.FC = () => {
   return (
-    <View>
-      <Text>Profile Stack Screen</Text>
-    </View>
+    <ContainerLayout>
+      <ThemeText>Profile Stack Screen</ThemeText>
+      <PinMyPet />
+    </ContainerLayout>
   )
 }
 
