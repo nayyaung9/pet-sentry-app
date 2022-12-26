@@ -7,16 +7,17 @@ import TabTimeline from '~screens/Tabs/Timeline';
 import TabPost from '~screens/Tabs/Post';
 import TabProfile from '~screens/Tabs/Profile';
 
-import { useTheme } from '~utils/styles/ThemeManager';
-import { Image, View } from 'react-native';
+import {useTheme} from '~utils/styles/ThemeManager';
+import {Image, StyleSheet, View} from 'react-native';
 
 const Tab = createBottomTabNavigator<ScreenTabsStackParamList>();
 
-const profileUrl = "https://miro.medium.com/fit/c/40/40/1*9kIwT18smVjb-fhsOdUNBw.jpeg";
+const profileUrl =
+  'https://miro.medium.com/fit/c/40/40/1*9kIwT18smVjb-fhsOdUNBw.jpeg';
 const isAuthenticated = true;
 
 const ScreenTabs: React.FC = () => {
-  const { colors } = useTheme();
+  const {colors} = useTheme();
   return (
     <Tab.Navigator
       initialRouteName={'Tab-Timeline'}
@@ -53,17 +54,23 @@ const ScreenTabs: React.FC = () => {
               return (
                 <>
                   {isAuthenticated ? (
-                    <View style={{ borderWidth: focused ? 2 : 0, borderColor: color, borderRadius: 50, padding: 2 }}>
-                      <Image source={{ uri: profileUrl }} style={{ width: 24, height: 24 }} />   
+                    <View
+                      style={[
+                        styles.authenticatedUserTabView,
+                        {borderWidth: focused ? 2 : 0, borderColor: color},
+                      ]}>
+                      <Image
+                        source={{uri: profileUrl}}
+                        style={{width: 24, height: 24, borderRadius: 100}}
+                      />
                     </View>
                   ) : (
-                      <MaterialCommunityIcons
+                    <MaterialCommunityIcons
                       name={focused ? 'account' : 'account-outline'}
                       {...{size, color}}
                     />
                   )}
                 </>
-           
               );
             default:
               return (
@@ -81,5 +88,12 @@ const ScreenTabs: React.FC = () => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  authenticatedUserTabView: {
+    borderRadius: 50,
+    padding: 2,
+  },
+});
 
 export default ScreenTabs;
