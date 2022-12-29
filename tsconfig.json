@@ -24,7 +24,7 @@
         "./src/utils/*"
       ],
       "~startup/*": [
-        "./src/startup/*"
+        "src/utils/startup/*"
       ],
       "~root/*": [
         "./src/*"
