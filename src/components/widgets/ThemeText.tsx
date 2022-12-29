@@ -28,6 +28,7 @@ const ThemeText: React.FC<Props & TextProps> = ({
   style,
   fontWeight = 'Regular',
   color = '#000',
+  ...rest
 }) => {
   return (
     <Text
@@ -37,6 +38,7 @@ const ThemeText: React.FC<Props & TextProps> = ({
         {...(fontStyle && StyleConstants.FontStyle[fontStyle])},
         {...{color}},
       ]}
+      {...rest}
       children={children}
     />
   );

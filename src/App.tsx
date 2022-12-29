@@ -20,7 +20,7 @@ const App: React.FC = () => {
           Array.isArray(geolocationResponse) &&
           geolocationResponse.length >= 1
         ) {
-          const query = `${geolocationResponse[0]},${geolocationResponse[1]}`;
+          const query = `${geolocationResponse[0]}, ${geolocationResponse[1]}`;
 
           fetch(
             `${GEOCODER_ENDPOINT}?q=${query}&key=${GEOCODER_KEY}&language=en&pretty=1`,

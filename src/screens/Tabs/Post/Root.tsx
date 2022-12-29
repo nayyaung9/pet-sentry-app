@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import ContainerLayout from '~components/ContainerLayout';
+import ThemeText from '~components/widgets/ThemeText';
 
 const Post: React.FC = () => {
   return (
-    <View>
-      <Text>Post Stack Screen</Text>
-    </View>
+    <ContainerLayout>
+      <ThemeText>Post Stack Screen</ThemeText>
+    </ContainerLayout>
   );
 };
 

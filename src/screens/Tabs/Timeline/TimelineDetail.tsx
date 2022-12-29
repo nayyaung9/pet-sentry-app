@@ -32,24 +32,39 @@ const TimelineDetail = () => {
       />
 
       <View style={styles.contentContainer}>
-        <View style={styles.petInfoCardRow}>
-          <ThemeText fontStyle={'L'}>Lu Soe Kg</ThemeText>
+        <View
+          style={[
+            styles.petInfoCardRow,
+            {marginBottom: StyleConstants.Spacing.XS},
+          ]}>
+          <ThemeText style={{flex: 1}} fontStyle={'L'} numberOfLines={2}>
+            Lu Soe Kg
+          </ThemeText>
+          <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
+            Lost at Dec, 10, 2022
+          </ThemeText>
         </View>
-        <View style={styles.petInfoCardRow}>
+        <View
+          style={[
+            styles.petInfoCardRow,
+            {marginBottom: StyleConstants.Spacing.M},
+          ]}>
           <ThemeText color={colors.textSecondary}>
             <Ionicons name="md-location" />
             Tarmwe, Yangon
           </ThemeText>
         </View>
         <View style={{marginBottom: StyleConstants.Spacing.M}}>
-          <ThemeText fontStyle={'L'}>Description</ThemeText>
-          <ThemeText color={'rgba(0, 0, 0, 0.7)'}>
+          <ThemeText fontStyle={'L'}>Information</ThemeText>
+          <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
             escape from their homes or yards, get lost during a move or
             vacation, or become separated from their owners during a natural
-            disaster or other emergency. Pets may also become lost if they are
-            stolen or if they wander off while out on a walk or hike. It is
-            important for pet owners to take steps to prevent their pets from
-            becoming lost, such as
+          </ThemeText>
+        </View>
+        <View style={{marginBottom: StyleConstants.Spacing.M}}>
+          <ThemeText fontStyle={'L'}>Special Traits</ThemeText>
+          <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
+            Friendly toward people, including well-behaved children.
           </ThemeText>
         </View>
         <View style={{marginBottom: StyleConstants.Spacing.M}}>
@@ -111,7 +126,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: StyleConstants.Spacing.XS,
   },
   contentContainer: {
     flexGrow: 1,

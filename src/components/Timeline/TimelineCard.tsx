@@ -34,14 +34,23 @@ const TimelineCard = ({item}: {item: any}) => {
         resizeMode={FastImage.resizeMode.cover}
       />
       <View style={styles.timelineCardContent}>
-        <ThemeText fontStyle="L" fontWeight={'Medium'}>
-          {item?.name}
-        </ThemeText>
-        <ThemeText fontStyle={'S'} fontWeight={'Light'}>
-          No 55, Awwba Street, Tarmwe
-        </ThemeText>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <ThemeText fontStyle="L" fontWeight={'Medium'} color={colors.primary}>
+            {item?.name}
+          </ThemeText>
+          <ThemeText fontStyle={'XS'} color={"rgba(0, 0, 0, 0.6)"}>
+            {item?.createdAt}
+          </ThemeText>
+        </View>
 
-        {/* <ThemeText fontStyle={'S'} fontWeight={'Light'}>{item?.createdAt}</ThemeText> */}
+        <ThemeText fontStyle={'S'} fontWeight={'Light'} numberOfLines={2}>
+          No 55, Awwba Street, Tarmwe asasas sasas asass asasa as as
+        </ThemeText>
       </View>
     </TouchableOpacity>
   );
