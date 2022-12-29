@@ -16,5 +16,15 @@ module.exports = {
         }
       }
     ],
+    ["module:react-native-dotenv", {
+      "envName": "PET_SENTRY_ENV",
+      "moduleName": "@env",
+      "path": ".env",
+      "blocklist": null,
+      "allowlist": null,
+      "safe": false,
+      "allowUndefined": false,
+      "verbose": false
+    }]
   ]
 };
