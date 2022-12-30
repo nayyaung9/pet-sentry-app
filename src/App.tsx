@@ -21,7 +21,6 @@ const App: React.FC = () => {
           geolocationResponse.length >= 1
         ) {
           const query = `${geolocationResponse[0]}, ${geolocationResponse[1]}`;
-
           fetch(
             `${GEOCODER_ENDPOINT}?q=${query}&key=${GEOCODER_KEY}&language=en&pretty=1`,
             {
@@ -31,6 +30,7 @@ const App: React.FC = () => {
             .then(res => res.json())
             .then(response => {
               const {results} = response;
+              console.log(results)
               const {state, suburb} = results[0] && results[0]?.components;
               const isTownshipAvailable = suburb || '';
 
@@ -38,7 +38,8 @@ const App: React.FC = () => {
                 isTownshipAvailable && ','
               }${state || ''}`;
               setgeocoderLocation(geoCodedLocation);
-            });
+            })
+            .catch(err => console.log(err));
         }
       } catch {}
     };

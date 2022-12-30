@@ -47,6 +47,7 @@ const Button = ({icon, title, disabled, onPress}: ButtonProps) => {
       disabled={disabled}
       children={children}
       style={{
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',

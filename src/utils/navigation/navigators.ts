@@ -1,4 +1,5 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
   'Screen-Tabs': NavigatorScreenParams<ScreenTabsStackParamList>;
@@ -20,6 +21,9 @@ export type TabTimelineParamList = {
 };
 export type TabPostParamList = {
   'Tab-Post-Root': undefined;
+  'Tab-Post-Form': {
+    actionType: string;
+  };
 };
 export type TabProfileParamList = {
   'Tab-Profile-Root': undefined;
