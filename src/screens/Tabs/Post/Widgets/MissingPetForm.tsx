@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
 import Button from '~components/widgets/Button';
 import Gender from '~components/widgets/Gender';
 import Input, {InputState} from '~components/widgets/Input';
@@ -17,6 +18,7 @@ import Select from '~components/widgets/Select';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StyleConstants} from '~utils/styles/constants';
 
+import moment from 'moment';
 import collar_colors from '~utils/constants/collar_colors.json';
 import pet_types from '~utils/constants/pet_types.json';
 
@@ -34,6 +36,9 @@ const MissingPetForm = () => {
 
   const [petType, setPetType] = useState('');
   const [collarColor, setCollarColor] = useState('');
+
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
 
   const petNameInputRef = useRef<TextInput>(null);
   const [petName, setPetName] = useState('');
@@ -134,11 +139,25 @@ const MissingPetForm = () => {
         {...traitInputProps}
         helperText="Unusual color, behavior, etc"
       />
-      <ThemeText>Lost Date Here</ThemeText>
+
+      <View style={{paddingBottom: StyleConstants.Spacing.M}}>
+        <InputLabel>Lost Date</InputLabel>
+        <TouchableOpacity
+          onPress={() => setOpen(true)}
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: "#eee",
+          }}>
+          <ThemeText>
+            {date ? moment(date).format('DD, MMM, YYYY') : 'Select lost date'}
+          </ThemeText>
+        </TouchableOpacity>
+      </View>
+
       <Input label="Comment" multiline {...commentInputProps} />
       <Button title="Post" onPress={() => onSubmitMissingPet()} />
 
-      <ActionSheet ref={actionSheetRef}>
+      <ActionSheet ref={actionSheetRef} dataCount={collar_colors}>
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingVertical: StyleConstants.Spacing.S}}
@@ -153,7 +172,7 @@ const MissingPetForm = () => {
         />
       </ActionSheet>
 
-      <ActionSheet ref={petTypeActionSheetRef}>
+      <ActionSheet ref={petTypeActionSheetRef} dataCount={pet_types}>
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingVertical: StyleConstants.Spacing.S}}
@@ -167,6 +186,22 @@ const MissingPetForm = () => {
           )}
         />
       </ActionSheet>
+
+      <DatePicker
+        modal
+        mode={'date'}
+        maximumDate={new Date()}
+        minimumDate={new Date("2021-12-31")}
+        open={open}
+        date={date}
+        onConfirm={date => {
+          setOpen(false);
+          setDate(date);
+        }}
+        onCancel={() => {
+          setOpen(false);
+        }}
+      />
     </ScrollView>
   );
 };
