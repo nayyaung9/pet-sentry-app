@@ -25,6 +25,6 @@ module.exports = {
       "safe": false,
       "allowUndefined": false,
       "verbose": false
-    }]
-  ]
+    }],
+  ],
 };

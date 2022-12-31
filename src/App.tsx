@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import ApplicationNavigator from '~navigation/ApplicationNavigator';
-
 import ThemeManager from '~utils/styles/ThemeManager';
 
 import log from '~utils/startup/log';
@@ -30,7 +29,7 @@ const App: React.FC = () => {
             .then(res => res.json())
             .then(response => {
               const {results} = response;
-              console.log(results)
+              console.log(results);
               const {state, suburb} = results[0] && results[0]?.components;
               const isTownshipAvailable = suburb || '';
 
