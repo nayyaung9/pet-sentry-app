@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     padding: 0,
     ...StyleConstants.Font.Regular,
     height: 32,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
 });
 export default Select;

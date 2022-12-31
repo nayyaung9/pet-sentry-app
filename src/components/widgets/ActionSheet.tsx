@@ -15,13 +15,14 @@ const ActionSheet = forwardRef<RBSheet, ActionSheetProps>((props, ref) => {
   return (
     <RBSheet
       ref={ref}
-      height={DEVICE.height / 1.2}
+      height={DEVICE.height / 2.5}
       openDuration={250}
       customStyles={{
         container: {
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
-          padding: StyleConstants.Spacing.M
+          paddingHorizontal: StyleConstants.Spacing.M,
+          paddingTop: StyleConstants.Spacing.S
         }
       }}>
       {children}
