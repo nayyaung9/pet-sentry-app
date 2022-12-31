@@ -1,5 +1,11 @@
 import React, {useRef} from 'react';
-import {View, ScrollView} from 'react-native';
+import {
+  View,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import Button from '~components/widgets/Button';
 import Gender from '~components/widgets/Gender';
 import Input from '~components/widgets/Input';
@@ -9,9 +15,16 @@ import Select from '~components/widgets/Select';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StyleConstants} from '~utils/styles/constants';
 
+import collar_colors from '~utils/constants/collar_colors.json';
+import InputLabel from '~components/widgets/InputLabel';
+
+interface CollarItem {
+  id: number;
+  label: string;
+}
+
 const MissingPetForm = () => {
   const actionSheetRef = useRef<any>(null);
-
   return (
     <ScrollView
       style={{flex: 1}}
@@ -35,6 +48,16 @@ const MissingPetForm = () => {
         </View>
       </Select>
 
+      <InputLabel noPadding>
+        The more photos you add, the better the search will work
+      </InputLabel>
+      <Button
+        title="Upload Photo"
+        icon="md-camera-outline"
+        onPress={() => console.log('Post')}
+        // buttonBackground={'rgba(236, 65, 122, 0.7)'}
+      />
+
       <Input
         label="Special traits"
         maxLength={60}
@@ -45,16 +68,25 @@ const MissingPetForm = () => {
       <Button title="Post" onPress={() => console.log('Post')} />
 
       <ActionSheet ref={actionSheetRef}>
-        <Input
-          label="Search..."
-          maxLength={60}
-          multiline
-          helperText="Unusual color, behavior, etc"
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={collar_colors}
+          renderItem={({item, index}) => (
+            <TouchableOpacity
+              style={styles.listItem}
+              onPress={() => actionSheetRef.current?.close()}>
+              <ThemeText color={'#rgba(0, 0, 0, 0.7)'}>{item?.name}</ThemeText>
+            </TouchableOpacity>
+          )}
         />
-        <ThemeText>Action Sheet</ThemeText>
       </ActionSheet>
     </ScrollView>
   );
 };
 
+const styles = StyleSheet.create({
+  listItem: {
+    paddingVertical: StyleConstants.Spacing.S,
+  },
+});
 export default MissingPetForm;

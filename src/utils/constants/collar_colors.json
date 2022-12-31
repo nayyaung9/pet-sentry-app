@@ -1,0 +1,58 @@
+[
+  {
+    "id": 0,
+    "name": "Without a collar"
+  },
+  {
+    "id": 1,
+    "name": "Black"
+  },
+  {
+    "id": 2,
+    "name": "Grey"
+  },
+  {
+    "id": 3,
+    "name": "Green"
+  },
+  {
+    "id": 4,
+    "name": "Blue"
+  },
+  {
+    "id": 5,
+    "name": "Light Blue"
+  },
+  {
+    "id": 6,
+    "name": "Brown"
+  },
+  {
+    "id": 7,
+    "name": "Metal"
+  },
+  {
+    "id": 8,
+    "name": "Orange"
+  },
+  {
+    "id": 9,
+    "name": "Pink"
+  },
+  {
+    "id": 10,
+    "name": "Purple"
+  },
+  {
+    "id": 11,
+    "name": "Red"
+  },
+  {
+    "id": 12,
+    "name": "White"
+  },
+  {
+    "id": 13,
+    "name": "Yellow"
+  }
+]
