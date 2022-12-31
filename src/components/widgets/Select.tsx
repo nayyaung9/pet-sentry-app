@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#eee',
     padding: 0,
     ...StyleConstants.Font.Regular,
-    // backgroundColor: "#f00"
+    height: 32,
+    justifyContent: "center",
   },
 });
 export default Select;

@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {View} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import Button from '~components/widgets/Button';
 import Gender from '~components/widgets/Gender';
 import Input from '~components/widgets/Input';
@@ -7,12 +7,16 @@ import ActionSheet from '~components/widgets/ActionSheet';
 import ThemeText from '~components/widgets/ThemeText';
 import Select from '~components/widgets/Select';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {StyleConstants} from '~utils/styles/constants';
 
 const MissingPetForm = () => {
   const actionSheetRef = useRef<any>(null);
 
   return (
-    <View>
+    <ScrollView
+      style={{flex: 1}}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{paddingVertical: StyleConstants.Spacing.M}}>
       <Gender />
       <Input label="Pet name" />
       <Input label="Missing here" />
@@ -49,7 +53,7 @@ const MissingPetForm = () => {
         />
         <ThemeText>Action Sheet</ThemeText>
       </ActionSheet>
-    </View>
+    </ScrollView>
   );
 };
 

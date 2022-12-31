@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: StyleConstants.Spacing.Global.PagePadding,
+    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
   },
 });
 
