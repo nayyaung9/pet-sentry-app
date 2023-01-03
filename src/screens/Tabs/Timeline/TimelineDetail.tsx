@@ -18,10 +18,10 @@ import {
   TabTimelineParamList,
   TabTimelineStackScreenProps,
 } from '~utils/navigation/navigators';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Avatar from '~components/Avatar';
 import {useTimelineDetailQuery} from '~utils/queryHooks/timeline';
 import moment from 'moment';
+import PetOwner from '~components/PetOwner';
+import MenuRow from '~components/MenuRow';
 
 const DEVICE = Dimensions.get('window');
 
@@ -38,6 +38,8 @@ const TimelineDetail: React.FC<
   const {data, isLoading, error} = useTimelineDetailQuery({
     id: petId,
   });
+
+  const isOwnerExist = data?._owner && Object.keys(data?._owner).length > 1;
 
   return (
     <ScrollView
@@ -56,7 +58,7 @@ const TimelineDetail: React.FC<
             <View
               style={[
                 styles.petInfoCardRow,
-                {marginBottom: StyleConstants.Spacing.XS},
+                {marginBottom: StyleConstants.Spacing.S},
               ]}>
               <ThemeText style={{flex: 1}} fontStyle={'L'} numberOfLines={2}>
                 {data?.petName}
@@ -65,77 +67,52 @@ const TimelineDetail: React.FC<
                 Lost at {moment(data?.createdAt).format('MMM DDD YYYY')}
               </ThemeText>
             </View>
-            <View
-              style={[
-                styles.petInfoCardRow,
-                {marginBottom: StyleConstants.Spacing.M},
-              ]}>
-              <ThemeText color={colors.textSecondary}>
-                <Ionicons name="md-location" />
-                Tarmwe, Yangon
-              </ThemeText>
-            </View>
+
+            {data?.missingPlace != '' && (
+              <MenuRow
+                isDisable={true}
+                icon={'md-location'}
+                label={data?.missingPlace}
+              />
+            )}
+
+            <MenuRow
+              isDisable={true}
+              icon={'md-location'}
+              label={data?.gender ? 'Male' : 'Female'}
+            />
 
             {data?.information != '' && (
               <View style={{marginBottom: StyleConstants.Spacing.M}}>
-                <ThemeText fontStyle={'L'}>Information</ThemeText>
-                <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
-                  {data?.information}
+                <ThemeText color={'rgba(0, 0, 0, 0.6)'} fontStyle={'S'} style={{ marginBottom: StyleConstants.Spacing.S }}>
+                  Information
                 </ThemeText>
+                <ThemeText>{data?.information}</ThemeText>
               </View>
             )}
 
-            {data?.specialTraits != '' && (
+            {data?.specialTraits != '' && data?.specialTraits != null && (
               <View style={{marginBottom: StyleConstants.Spacing.M}}>
-                <ThemeText fontStyle={'L'}>Special Traits</ThemeText>
-                <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
-                  {data?.specialTraits}
+                <ThemeText color={'rgba(0, 0, 0, 0.6)'} fontStyle={'S'} style={{ marginBottom: StyleConstants.Spacing.S }}>
+                  Special Traits
                 </ThemeText>
+                <ThemeText>{data?.specialTraits}</ThemeText>
               </View>
             )}
           </>
         )}
 
-        <View style={{marginBottom: StyleConstants.Spacing.M}}>
-          <ThemeText fontStyle={'L'}>Owner Info</ThemeText>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginTop: StyleConstants.Spacing.S,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Avatar
-                src={
-                  'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHBldHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'
-                }
-              />
-              <ThemeText
-                style={{marginLeft: StyleConstants.Spacing.S}}
-                fontWeight={'Medium'}>
-                Nay Yaung Lin Lakk
-              </ThemeText>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Ionicons
-                name="md-chatbubbles-outline"
-                size={24}
-                color={colors.primary}
-                style={{marginRight: 16}}
-              />
-              <Ionicons
-                name="md-call-outline"
-                size={24}
-                color={colors.primary}
-              />
-            </View>
-          </View>
-        </View>
+        {/* Pet Owner Component */}
+        {isOwnerExist && (
+          <PetOwner
+            {...{
+              ownerName: data?._owner?.fullname,
+              ownerProfile: data?._owner?.profileUrl,
+            }}
+          />
+        )}
+        {/* Pet Owner Component */}
+
         <Button
           title="View on Map"
           icon={'md-map'}
