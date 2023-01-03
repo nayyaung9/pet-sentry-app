@@ -9,7 +9,7 @@ const FoundPetForm = () => {
     <View>
       <ThemeText>Found</ThemeText>
       <Gender />
-      <Input label="Pet name" />
+      {/* <Input label="Pet name" /> */}
     </View>
   )
 }

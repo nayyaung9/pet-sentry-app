@@ -1,15 +1,18 @@
-import React, {useEffect} from 'react';
-import ApplicationNavigator from '~navigation/ApplicationNavigator';
-import ThemeManager from '~utils/styles/ThemeManager';
+import React, { useEffect } from "react";
+import ApplicationNavigator from "~navigation/ApplicationNavigator";
+import ThemeManager from "~utils/styles/ThemeManager";
 
-import log from '~utils/startup/log';
-import geolocation from '~utils/startup/geolocation';
-import {GEOCODER_ENDPOINT, GEOCODER_KEY} from '@env';
-import {useGeoState} from '~utils/states/geo.state';
+import { QueryClientProvider } from "@tanstack/react-query";
+import queryClient from "~utils/queryHooks";
+
+import log from "~utils/startup/log";
+import geolocation from "~utils/startup/geolocation";
+import { GEOCODER_ENDPOINT, GEOCODER_KEY } from "@env";
+import { useGeoState } from "~utils/states/geo.state";
 
 const App: React.FC = () => {
-  log('log', 'App', 'Rendering App');
-  const setgeocoderLocation = useGeoState(state => state.setLocation);
+  log("log", "App", "Rendering App");
+  const setgeocoderLocation = useGeoState((state) => state.setLocation);
 
   useEffect(() => {
     const mountBoot = async () => {
@@ -23,22 +26,21 @@ const App: React.FC = () => {
           fetch(
             `${GEOCODER_ENDPOINT}?q=${query}&key=${GEOCODER_KEY}&language=en&pretty=1`,
             {
-              method: 'GET',
-            },
+              method: "GET",
+            }
           )
-            .then(res => res.json())
-            .then(response => {
-              const {results} = response;
-              console.log(results);
-              const {state, suburb} = results[0] && results[0]?.components;
-              const isTownshipAvailable = suburb || '';
+            .then((res) => res.json())
+            .then((response) => {
+              const { results } = response;
+              const { state, suburb } = results[0] && results[0]?.components;
+              const isTownshipAvailable = suburb || "";
 
               const geoCodedLocation = `${isTownshipAvailable}${
-                isTownshipAvailable && ','
-              }${state || ''}`;
+                isTownshipAvailable && ","
+              }${state || ""}`;
               setgeocoderLocation(geoCodedLocation);
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         }
       } catch {}
     };
@@ -47,9 +49,11 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <ThemeManager>
-      <ApplicationNavigator />
-    </ThemeManager>
+    <QueryClientProvider client={queryClient}>
+      <ThemeManager>
+        <ApplicationNavigator />
+      </ThemeManager>
+    </QueryClientProvider>
   );
 };
 

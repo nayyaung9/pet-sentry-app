@@ -16,7 +16,6 @@ const Stack = createNativeStackNavigator<TabTimelineParamList>();
 const TabProfile: React.FC = () => {
   const {colors} = useTheme();
   const geocoderLocation = useGeoState(state => state.location);
-  console.log("geocoderLocation", geocoderLocation)
   return (
     <Stack.Navigator>
       <Stack.Screen
