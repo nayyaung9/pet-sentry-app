@@ -67,7 +67,7 @@ const TabProfile: React.FC = () => {
             />
           ),
           headerTitle: () => (
-            <ThemeText color={colors.textWhite}>{params?.pet?.name}</ThemeText>
+            <ThemeText color={colors.textWhite}>{params?.petName}</ThemeText>
           ),
           headerRight: () => (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>

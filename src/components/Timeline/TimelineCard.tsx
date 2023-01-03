@@ -12,12 +12,14 @@ import moment from 'moment';
 const TimelineCard = ({item}: {item: any}) => {
   const {colors} = useTheme();
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
+
   return (
     <TouchableOpacity
       activeOpacity={1}
       onPress={() =>
         navigation.navigate('Tab-Timeline-Detail', {
-          pet: item,
+          petId: item?._id,
+          petName: item?.petName,
         })
       }
       style={[
@@ -49,9 +51,9 @@ const TimelineCard = ({item}: {item: any}) => {
           </ThemeText>
         </View>
 
-        {(item?.comment || item?.specialTraits) && (
+        {(item?.information || item?.specialTraits) && (
           <ThemeText fontStyle={'S'} fontWeight={'Light'} numberOfLines={2}>
-            {item?.comment || item?.specialTraits}
+            {item?.information || item?.specialTraits}
           </ThemeText>
         )}
       </View>

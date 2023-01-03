@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import Button from '~components/widgets/Button';
 import ThemeText from '~components/widgets/ThemeText';
@@ -13,15 +14,33 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
-import {TabTimelineParamList} from '~utils/navigation/navigators';
+import {
+  TabTimelineParamList,
+  TabTimelineStackScreenProps,
+} from '~utils/navigation/navigators';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Avatar from '~components/Avatar';
+import {useTimelineDetailQuery} from '~utils/queryHooks/timeline';
+import moment from 'moment';
 
 const DEVICE = Dimensions.get('window');
 
-const TimelineDetail = () => {
+const TimelineDetail: React.FC<
+  TabTimelineStackScreenProps<'Tab-Timeline-Detail'>
+> = ({
+  route: {
+    params: {petId},
+  },
+}) => {
   const {colors} = useTheme();
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
+
+  const {data, isLoading, error} = useTimelineDetailQuery({
+    id: petId,
+  });
+
+  console.log('pet detail ', data);
+
   return (
     <ScrollView
       style={{flex: 1, backgroundColor: '#fff'}}
@@ -32,41 +51,53 @@ const TimelineDetail = () => {
       />
 
       <View style={styles.contentContainer}>
-        <View
-          style={[
-            styles.petInfoCardRow,
-            {marginBottom: StyleConstants.Spacing.XS},
-          ]}>
-          <ThemeText style={{flex: 1}} fontStyle={'L'} numberOfLines={2}>
-            Lu Soe Kg
-          </ThemeText>
-          <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
-            Lost at Dec, 10, 2022
-          </ThemeText>
-        </View>
-        <View
-          style={[
-            styles.petInfoCardRow,
-            {marginBottom: StyleConstants.Spacing.M},
-          ]}>
-          <ThemeText color={colors.textSecondary}>
-            <Ionicons name="md-location" />
-            Tarmwe, Yangon
-          </ThemeText>
-        </View>
-        <View style={{marginBottom: StyleConstants.Spacing.M}}>
-          <ThemeText fontStyle={'L'}>Information</ThemeText>
-          <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
-            escape from their homes or yards, get lost during a move or
-            vacation, or become separated from their owners during a natural
-          </ThemeText>
-        </View>
-        <View style={{marginBottom: StyleConstants.Spacing.M}}>
-          <ThemeText fontStyle={'L'}>Special Traits</ThemeText>
-          <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
-            Friendly toward people, including well-behaved children.
-          </ThemeText>
-        </View>
+        {isLoading ? (
+          <ActivityIndicator color={colors.primary} size={'large'} />
+        ) : (
+          <>
+            <View
+              style={[
+                styles.petInfoCardRow,
+                {marginBottom: StyleConstants.Spacing.XS},
+              ]}>
+              <ThemeText style={{flex: 1}} fontStyle={'L'} numberOfLines={2}>
+                {data?.petName}
+              </ThemeText>
+              <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
+                Lost at {moment(data?.createdAt).format('MMM DDD YYYY')}
+              </ThemeText>
+            </View>
+            <View
+              style={[
+                styles.petInfoCardRow,
+                {marginBottom: StyleConstants.Spacing.M},
+              ]}>
+              <ThemeText color={colors.textSecondary}>
+                <Ionicons name="md-location" />
+                Tarmwe, Yangon
+              </ThemeText>
+            </View>
+
+            {data?.information != '' && (
+              <View style={{marginBottom: StyleConstants.Spacing.M}}>
+                <ThemeText fontStyle={'L'}>Information</ThemeText>
+                <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
+                  {data?.information}
+                </ThemeText>
+              </View>
+            )}
+
+            {data?.specialTraits != '' && (
+              <View style={{marginBottom: StyleConstants.Spacing.M}}>
+                <ThemeText fontStyle={'L'}>Special Traits</ThemeText>
+                <ThemeText color={'rgba(0, 0, 0, 0.6)'}>
+                  {data?.specialTraits}
+                </ThemeText>
+              </View>
+            )}
+          </>
+        )}
+
         <View style={{marginBottom: StyleConstants.Spacing.M}}>
           <ThemeText fontStyle={'L'}>Owner Info</ThemeText>
           <View

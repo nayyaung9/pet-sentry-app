@@ -1,5 +1,5 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
   'Screen-Tabs': NavigatorScreenParams<ScreenTabsStackParamList>;
@@ -15,7 +15,8 @@ export type ScreenTabsStackParamList = {
 export type TabTimelineParamList = {
   'Tab-Timeline-Root': undefined;
   'Tab-Timeline-Detail': {
-    pet: {id: number; name: string; createdAt: string};
+    petId: string;
+    petName: string;
   };
   'Tab-Timeline-Map': undefined;
 };
@@ -28,3 +29,6 @@ export type TabPostParamList = {
 export type TabProfileParamList = {
   'Tab-Profile-Root': undefined;
 };
+
+export type TabTimelineStackScreenProps<T extends keyof TabTimelineParamList> =
+  NativeStackScreenProps<TabTimelineParamList, T>;
