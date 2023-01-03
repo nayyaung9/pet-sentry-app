@@ -6,8 +6,9 @@ import ThemeText from '~components/widgets/ThemeText';
 import {useTheme} from '~utils/styles/ThemeManager';
 
 const Route = ({route: {key}}: {route: any}) => {
-  return <TimelineContainer key={key} />;
+  return <TimelineContainer queryKey={key} />;
 };
+
 const renderScene = SceneMap({
   first: Route,
   second: Route,
@@ -20,7 +21,7 @@ const TimelineRoot: React.FC = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'Missing'},
-    {key: 'second', title: 'Report'},
+    {key: 'second', title: 'Found'},
   ]);
 
   const renderTabBar = (props: any) => (

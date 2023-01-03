@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import ThemeText from '~components/widgets/ThemeText';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
@@ -7,6 +7,7 @@ import {TabTimelineParamList} from '~utils/navigation/navigators';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useTheme} from '~utils/styles/ThemeManager';
 import {StyleConstants} from '~utils/styles/constants';
+import moment from 'moment';
 
 const TimelineCard = ({item}: {item: any}) => {
   const {colors} = useTheme();
@@ -41,16 +42,18 @@ const TimelineCard = ({item}: {item: any}) => {
             justifyContent: 'space-between',
           }}>
           <ThemeText fontStyle="L" fontWeight={'Medium'} color={colors.primary}>
-            {item?.name}
+            {item?.petName}
           </ThemeText>
-          <ThemeText fontStyle={'XS'} color={"rgba(0, 0, 0, 0.6)"}>
-            {item?.createdAt}
+          <ThemeText fontStyle={'XS'} color={'rgba(0, 0, 0, 0.6)'}>
+            {moment(item?.createdAt).format('MMM, DDD, YYYY')}
           </ThemeText>
         </View>
 
-        <ThemeText fontStyle={'S'} fontWeight={'Light'} numberOfLines={2}>
-          No 55, Awwba Street, Tarmwe asasas sasas asass asasa as as
-        </ThemeText>
+        {(item?.comment || item?.specialTraits) && (
+          <ThemeText fontStyle={'S'} fontWeight={'Light'} numberOfLines={2}>
+            {item?.comment || item?.specialTraits}
+          </ThemeText>
+        )}
       </View>
     </TouchableOpacity>
   );
