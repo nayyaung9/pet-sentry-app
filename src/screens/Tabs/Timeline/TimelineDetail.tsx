@@ -39,8 +39,6 @@ const TimelineDetail: React.FC<
     id: petId,
   });
 
-  console.log('pet detail ', data);
-
   return (
     <ScrollView
       style={{flex: 1, backgroundColor: '#fff'}}
@@ -151,7 +149,7 @@ const TimelineDetail: React.FC<
 const styles = StyleSheet.create({
   petImageContainer: {
     width: '100%',
-    height: DEVICE.height / 2,
+    height: DEVICE.height / 2.3,
   },
   petInfoCardRow: {
     flexDirection: 'row',

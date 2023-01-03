@@ -29,7 +29,6 @@ const timelineDetailQueryFunction = async ({
   queryKey,
 }: QueryFunctionContext<QueryKeyTimelineDetail>) => {
   const {id} = queryKey[1];
-  console.log('qk', id)
   const {data: response} = await apiInstance.get(`/pets/pet/${id}`);
 
   return response.data;
