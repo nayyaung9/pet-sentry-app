@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Pet Sentry</string>
+
+    <string name="facebook_app_id">862646411453177</string>
+    <string name="fb_login_protocol_scheme">fb862646411453177</string>
+    <string name="facebook_client_token">c3c9f8bdba15d885d7c97210cbb922d4</string>
 </resources>
