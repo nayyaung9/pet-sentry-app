@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {CSSProperties, useMemo} from 'react';
 import ThemeText from '~components/widgets/ThemeText';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
@@ -19,6 +19,8 @@ export interface Props {
   disabled?: boolean;
 
   onPress: () => void;
+
+  color?: CSSProperties['color']
 }
 
 const HeaderRight: React.FC<Props> = ({
@@ -34,6 +36,7 @@ const HeaderRight: React.FC<Props> = ({
   loading,
   disabled,
   onPress,
+  color,
 }) => {
   const {colors, theme} = useTheme();
 
@@ -54,7 +57,7 @@ const HeaderRight: React.FC<Props> = ({
       case 'icon':
         return (
           <>
-            <Ionicons name={content} size={24} color={colors.primary} />
+            <Ionicons name={content} size={24} color={color || colors.primary} />
           </>
         );
       case 'text':

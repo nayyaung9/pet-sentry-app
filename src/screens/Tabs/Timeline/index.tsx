@@ -8,48 +8,19 @@ import {useTheme} from '~utils/styles/ThemeManager';
 import Map from './Map';
 import ThemeText from '~components/widgets/ThemeText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Pressable, View} from 'react-native';
-import {useGeoState} from '~utils/states/geo.state';
+import {View} from 'react-native';
 
 const Stack = createNativeStackNavigator<TabTimelineParamList>();
 
 const TabProfile: React.FC = () => {
   const {colors} = useTheme();
-  const geocoderLocation = useGeoState(state => state.location);
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Tab-Timeline-Root"
         component={Root}
-        options={({navigation}: any) => ({
-          title: 'Pet Sentry',
-          headerShadowVisible: false,
-          headerLeft: () => (
-            <Ionicons name="md-menu" size={24} color={'#fff'} />
-          ),
-          headerTitle: () => (
-            <View style={{alignItems: 'center'}}>
-              <ThemeText color={'#fff'} fontStyle={'M'} fontWeight={'Medium'}>
-                Pet Sentry
-              </ThemeText>
-              {geocoderLocation != '' && (
-                <ThemeText color={'#fff'} fontStyle={'XS'}>
-                  {geocoderLocation}
-                </ThemeText>
-              )}
-            </View>
-          ),
-          headerTitleAlign: 'center',
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Tab-Timeline-Map')}
-              children={<Ionicons name="md-map" size={24} color={'#fff'} />}
-            />
-          ),
-          headerTitleStyle: {color: '#fff'},
-          headerStyle: {
-            backgroundColor: colors.primary,
-          },
+        options={() => ({
+          headerShown: false,
         })}
       />
       <Stack.Screen

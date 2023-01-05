@@ -1,17 +1,27 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Button from '~components/widgets/Button';
-import ThemeText from '~components/widgets/ThemeText';
 import {StyleConstants} from '~utils/styles/constants';
 import {onFacebookAuthentication} from '~utils/queryHooks/auth';
+import {useAuthState} from '~utils/states/auth.state';
+import {storeCredential} from '~utils/storage/keychain';
 
 const AuthenticationRoot = () => {
+  const setCredential = useAuthState(state => state.setCredential);
+
+  const onAuthentication = async () => {
+    const token = await onFacebookAuthentication();
+
+    if (token) {
+      await storeCredential(token);
+      setCredential(token);
+    }
+  };
   return (
     <View style={styles.rootContainer}>
-      <ThemeText>Authentication Root</ThemeText>
       <Button
         title={'Login with Facebook'}
-        onPress={onFacebookAuthentication}
+        onPress={() => onAuthentication()}
       />
     </View>
   );

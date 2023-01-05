@@ -7,6 +7,7 @@ type FirebaseProfileCredentialType = {
   name: string;
   picture: any;
 };
+
 export const onFacebookAuthentication = async () => {
   const result = await LoginManager.logInWithPermissions([
     'public_profile',
@@ -33,25 +34,25 @@ export const onFacebookAuthentication = async () => {
 
   const {additionalUserInfo} = firebaseUserCredential;
 
-  if (additionalUserInfo?.isNewUser) {
-    const {
-      email,
-      name,
-      picture: {
-        data: {url},
-      },
-    } = additionalUserInfo?.profile as FirebaseProfileCredentialType;
+  const {
+    email,
+    name,
+    picture: {
+      data: {url},
+    },
+  } = additionalUserInfo?.profile as FirebaseProfileCredentialType;
 
-    const authenticateBodyRequest = {name, email, profileUrl: url};
+  const authenticateBodyRequest = {name, email, profileUrl: url};
 
-    try {
-      await apiInstance.post('users/authenticate', {
-        ...authenticateBodyRequest,
-      });
-    } catch (err) {}
-  } else {
+  try {
+    const {data: response} = await apiInstance.post('users/authenticate', {
+      ...authenticateBodyRequest,
+    });
 
+    const { token } = response?.data;
+
+    return token;
+    } catch (err) {
+    return undefined;
   }
-
-  return firebaseUserCredential;
 };

@@ -25,6 +25,7 @@ const ScreenTabs: React.FC = () => {
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: '#ddd',
+        tabBarHideOnKeyboard: true,
         tabBarShowLabel: false,
         tabBarIcon: ({
           focused,
