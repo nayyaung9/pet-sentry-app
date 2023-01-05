@@ -21,6 +21,9 @@ import {StyleConstants} from '~utils/styles/constants';
 import moment from 'moment';
 import collar_colors from '~utils/constants/collar_colors.json';
 import pet_types from '~utils/constants/pet_types.json';
+import genders from '~utils/constants/genders.json';
+import {useMutation} from '@tanstack/react-query';
+import {useMissingPetMutation} from '~utils/queryHooks/timeline';
 
 interface CollarColorProps {
   id: number;
@@ -36,6 +39,9 @@ const MissingPetForm = () => {
 
   const [petType, setPetType] = useState('');
   const [collarColor, setCollarColor] = useState('');
+  const [gender, setGender] = useState(genders[0]?.value);
+
+  const onSelectGender = (value: string) => setGender(value);
 
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
@@ -77,14 +83,26 @@ const MissingPetForm = () => {
     petTypeActionSheetRef.current?.close();
   };
 
+  const {mutate: missingPetAction, isLoading} = useMissingPetMutation({
+    onSuccess: () => {
+      console.log('LoL Success');
+    },
+    onError: error => {
+      console.log('mutation error', error);
+    },
+  });
+
   const onSubmitMissingPet = () => {
-    const payload = {
+    return missingPetAction({
       petName,
       petType,
+      gender,
+      activityType: 'Missing',
       collarColor: collarColor || null,
-      traits,
-    };
-    console.log(payload);
+      information: comment,
+      specialTraits: traits,
+      activityDate: date,
+    });
   };
 
   return (
@@ -92,7 +110,7 @@ const MissingPetForm = () => {
       style={{flex: 1}}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingVertical: StyleConstants.Spacing.M}}>
-      <Gender />
+      <Gender {...{gender, onSelectGender}} />
       <Input label="Pet name*" {...petNameInputProps} />
 
       <Select
@@ -146,7 +164,7 @@ const MissingPetForm = () => {
           onPress={() => setOpen(true)}
           style={{
             borderBottomWidth: 1,
-            borderBottomColor: "#eee",
+            borderBottomColor: '#eee',
           }}>
           <ThemeText>
             {date ? moment(date).format('DD, MMM, YYYY') : 'Select lost date'}
@@ -155,7 +173,12 @@ const MissingPetForm = () => {
       </View>
 
       <Input label="Comment" multiline {...commentInputProps} />
-      <Button title="Post" onPress={() => onSubmitMissingPet()} />
+
+      <Button
+        title="Post"
+        disabled={isLoading}
+        onPress={() => onSubmitMissingPet()}
+      />
 
       <ActionSheet ref={actionSheetRef} dataCount={collar_colors}>
         <FlatList
@@ -191,7 +214,7 @@ const MissingPetForm = () => {
         modal
         mode={'date'}
         maximumDate={new Date()}
-        minimumDate={new Date("2021-12-31")}
+        minimumDate={new Date('2021-12-31')}
         open={open}
         date={date}
         onConfirm={date => {

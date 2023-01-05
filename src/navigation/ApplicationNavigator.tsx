@@ -42,7 +42,7 @@ const ApplicationNavigator = () => {
           </View>
         ) : (
           <Stack.Navigator>
-            {!token ? (
+            {token ? (
               <Stack.Screen
                 name="Authentication"
                 component={AuthenticationRoot}

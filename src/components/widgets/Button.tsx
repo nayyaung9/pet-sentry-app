@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {Pressable, View} from 'react-native';
+import {Pressable, View, ActivityIndicator} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
@@ -24,22 +24,26 @@ const Button = ({icon, title, disabled, onPress}: ButtonProps) => {
   }, [theme, disabled]);
 
   const children = useMemo(() => {
-    if (icon && !title) {
-      return <Ionicons name={icon} size={24} color={mainColor} />;
+    if (disabled) {
+      return <ActivityIndicator color={'#ddd'} size={20} />;
+    } else {
+      if (icon && !title) {
+        return <Ionicons name={icon} size={24} color={mainColor} />;
+      }
+      if (title && !icon) {
+        return <ThemeText color={mainColor}>{title}</ThemeText>;
+      }
+      if (title && icon) {
+        return (
+          <>
+            <Ionicons name={icon} size={24} color={mainColor} />
+            <View style={{marginHorizontal: 4}} />
+            <ThemeText color={mainColor}>{title}</ThemeText>
+          </>
+        );
+      }
     }
-    if (title && !icon) {
-      return <ThemeText color={mainColor}>{title}</ThemeText>;
-    }
-    if (title && icon) {
-      return (
-        <>
-          <Ionicons name={icon} size={24} color={mainColor} />
-          <View style={{marginHorizontal: 4}} />
-          <ThemeText color={mainColor}>{title}</ThemeText>
-        </>
-      );
-    }
-  }, [theme]);
+  }, [theme, disabled]);
 
   return (
     <Pressable

@@ -1,4 +1,10 @@
-import {QueryFunctionContext, useQuery} from '@tanstack/react-query';
+import {
+  QueryFunctionContext,
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+} from '@tanstack/react-query';
+import {AxiosError} from 'axios';
 import apiInstance from '~utils/api/instance';
 
 type QueryKeyTimeline = ['Timeline', {activityType: string}];
@@ -43,4 +49,34 @@ const useTimelineDetailQuery = ({
   return useQuery(queryKey, timelineDetailQueryFunction, options);
 };
 
-export {useTimelineQuery, useTimelineDetailQuery};
+/** Query for mutation Pet Missing and Found */
+type MutationVarsMissingPet = {
+  petName: string;
+  petType: string;
+  gender: string;
+  activityType: 'Missing' | 'Found';
+  collarColor: string | null;
+  information?: string;
+  specialTraits?: string;
+  activityDate: Date;
+};
+
+const mutationFunction = async (params: MutationVarsMissingPet) => {
+  const {data: response} = await apiInstance.post('/pets/create-new-pet', {
+    ...params,
+  });
+
+  return response.data;
+};
+
+const useMissingPetMutation = (
+  options: UseMutationOptions<
+    PetSentry.MissingPetInputDTO,
+    AxiosError,
+    MutationVarsMissingPet
+  >,
+) => {
+  return useMutation(mutationFunction, options);
+};
+
+export {useTimelineQuery, useTimelineDetailQuery, useMissingPetMutation};

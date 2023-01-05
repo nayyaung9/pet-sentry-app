@@ -5,6 +5,7 @@ import {StyleConstants} from '~utils/styles/constants';
 import {onFacebookAuthentication} from '~utils/queryHooks/auth';
 import {useAuthState} from '~utils/states/auth.state';
 import {storeCredential} from '~utils/storage/keychain';
+import ThemeText from '~components/widgets/ThemeText';
 
 const AuthenticationRoot = () => {
   const setCredential = useAuthState(state => state.setCredential);
@@ -19,6 +20,7 @@ const AuthenticationRoot = () => {
   };
   return (
     <View style={styles.rootContainer}>
+      <ThemeText>Pet Sentry</ThemeText>
       <Button
         title={'Login with Facebook'}
         onPress={() => onAuthentication()}

@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Male",
+    "value": "male",
+    "icon": "md-male"
+  },
+  {
+    "label": "Female",
+    "value": "female",
+    "icon": "md-female"
+  }
+]

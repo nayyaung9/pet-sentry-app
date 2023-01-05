@@ -1,28 +1,26 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import ThemeText from '~components/widgets/ThemeText';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputLabel from './InputLabel';
+import genders from '~utils/constants/genders.json';
 
-const genders = [
-  {label: 'Male', value: 'male', icon: 'md-male'},
-  {label: 'Female', value: 'female', icon: 'md-female'},
-];
-const Gender = () => {
+interface GenderProps {
+  gender: string;
+  onSelectGender: (name: string) => void;
+}
+
+const Gender = ({gender: selectedGender, onSelectGender}: GenderProps) => {
   const {colors} = useTheme();
-  const [state, setState] = useState(genders[0]?.value);
-
-  const onSelectGender = (value: string) => setState(value);
-
   return (
     <View style={{paddingBottom: StyleConstants.Spacing.M}}>
       <InputLabel>Gender</InputLabel>
       <View style={[styles.root, {borderColor: colors.primary}]}>
         {Array.isArray(genders) &&
           genders.map((gender, index) => {
-            const isSelectedGender = state == gender?.value;
+            const isSelectedGender = selectedGender == gender?.value;
             return (
               <TouchableOpacity
                 key={index}
