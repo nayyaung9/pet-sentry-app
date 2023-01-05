@@ -29,7 +29,7 @@ const TimelineRoot = () => {
   const {colors} = useTheme();
 
   const [index, setIndex] = React.useState(0);
-  
+
   const [routes] = React.useState([
     {key: 'first', title: 'Missing'},
     {key: 'second', title: 'Found'},
@@ -62,7 +62,7 @@ const TimelineRoot = () => {
           color={'#fff'}
           onPress={() => console.log('Will open Drawer Stack')}
         />
-        <View>
+        <View style={{alignItems: 'center'}}>
           <ThemeText color={'#fff'} fontStyle={'M'} fontWeight={'Medium'}>
             Pet Sentry
           </ThemeText>
@@ -92,7 +92,7 @@ const TimelineRoot = () => {
 
 const styles = StyleSheet.create({
   header: {
-    paddingHorizontal: StyleConstants.Spacing.M,
+    paddingHorizontal: StyleConstants.Spacing.S,
     height: 60,
     flexDirection: 'row',
     alignItems: 'center',

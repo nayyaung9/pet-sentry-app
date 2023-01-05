@@ -22,18 +22,13 @@ import moment from 'moment';
 import collar_colors from '~utils/constants/collar_colors.json';
 import pet_types from '~utils/constants/pet_types.json';
 import genders from '~utils/constants/genders.json';
-import {useMutation} from '@tanstack/react-query';
 import {useMissingPetMutation} from '~utils/queryHooks/timeline';
+import { useNavigation } from '@react-navigation/native';
+import { TabTimelineParamList } from '~utils/navigation/navigators';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-interface CollarColorProps {
-  id: number;
-  name: string;
-}
-interface PetTypeProps {
-  id: number;
-  label: string;
-}
 const MissingPetForm = () => {
+  const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
   const actionSheetRef = useRef<any>(null);
   const petTypeActionSheetRef = useRef<any>(null);
 
@@ -73,12 +68,12 @@ const MissingPetForm = () => {
     maxLength: 120,
   };
 
-  const onHandleCollarColor = (item: CollarColorProps) => {
+  const onHandleCollarColor = (item: PetSentry.CollarColor) => {
     setCollarColor(item?.name);
     actionSheetRef.current?.close();
   };
 
-  const onHandlePetType = (type: PetTypeProps) => {
+  const onHandlePetType = (type: PetSentry.PetType) => {
     setPetType(type?.label);
     petTypeActionSheetRef.current?.close();
   };
@@ -127,7 +122,19 @@ const MissingPetForm = () => {
         </View>
       </Select>
 
-      {/* <Input label="Missing here*" /> */}
+      <View style={{paddingBottom: StyleConstants.Spacing.M}}>
+        <InputLabel>Missing here</InputLabel>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Tab-Timeline-Map')}
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: '#eee',
+          }}>
+          <ThemeText>
+            အမှတ် ၅၅၊ ၆လွှာ၊ ခေါင်းရင်းခန်း၊ ဩဘာလမ်း အလယ်၊ ကျောက်မြောင်း တာမွေ
+          </ThemeText>
+        </TouchableOpacity>
+      </View>
 
       <Select
         label="Collar Color"

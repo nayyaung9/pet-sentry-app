@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import MapView from 'react-native-maps';
+import { TabSharedStackScreenProps } from '~utils/navigation/navigators';
 import mapStyles from './mapStyles.json';
 
-const Map = () => {
+const TabSharedMap: React.FC= () => {
   const [region] = useState({
     latitude: 16.833734,
     longitude: 96.167805,
@@ -14,4 +15,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default TabSharedMap;

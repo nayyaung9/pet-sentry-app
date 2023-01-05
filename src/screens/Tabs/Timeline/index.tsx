@@ -2,10 +2,10 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TabTimelineParamList} from '~utils/navigation/navigators';
 import Root from './Root';
+import TabShared from '../Shared';
 import TimelineDetail from './TimelineDetail';
 import HeaderLeft from '~components/Header/Left';
 import {useTheme} from '~utils/styles/ThemeManager';
-import Map from './Map';
 import ThemeText from '~components/widgets/ThemeText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {View} from 'react-native';
@@ -57,14 +57,8 @@ const TabProfile: React.FC = () => {
           ),
         })}
       />
-      <Stack.Screen
-        name="Tab-Timeline-Map"
-        component={Map}
-        options={({navigation}: any) => ({
-          title: 'Map',
-          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />,
-        })}
-      />
+
+      {TabShared({ Stack })}
     </Stack.Navigator>
   );
 };
