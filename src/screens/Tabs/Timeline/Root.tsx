@@ -73,7 +73,7 @@ const TimelineRoot = () => {
           )}
         </View>
         <HeaderRight
-          onPress={() => navigation.navigate('Tab-Timeline-Map')}
+          onPress={() => navigation.navigate('Tab-Shared-Map')}
           content={'md-map'}
           color={'#fff'}
         />

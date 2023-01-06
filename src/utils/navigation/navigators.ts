@@ -41,6 +41,8 @@ export type TabTimelineParamList = {
     petName: string;
   };
 } & TabSharedStackParamList;
+export type TabTimelineStackScreenProps<T extends keyof TabTimelineParamList> =
+  NativeStackScreenProps<TabTimelineParamList, T>;
 
 export type TabPostParamList = {
   'Tab-Post-Root': undefined;
@@ -51,7 +53,4 @@ export type TabPostParamList = {
 
 export type TabProfileParamList = {
   'Tab-Profile-Root': undefined;
-};
-
-export type TabTimelineStackScreenProps<T extends keyof TabTimelineParamList> =
-  NativeStackScreenProps<TabTimelineParamList, T>;
+} & TabSharedStackParamList;

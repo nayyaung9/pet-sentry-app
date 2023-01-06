@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import MapView from 'react-native-maps';
-import { TabSharedStackScreenProps } from '~utils/navigation/navigators';
 import mapStyles from './mapStyles.json';
 
 const TabSharedMap: React.FC= () => {

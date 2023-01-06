@@ -8,6 +8,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useTheme} from '~utils/styles/ThemeManager';
 import {StyleConstants} from '~utils/styles/constants';
 import moment from 'moment';
+import {Blurhash} from 'react-native-blurhash';
 
 const TimelineCard = ({item}: {item: any}) => {
   const {colors} = useTheme();
@@ -28,6 +29,18 @@ const TimelineCard = ({item}: {item: any}) => {
           marginBottom: StyleConstants.Spacing.M,
         },
       ]}>
+      {/* <View
+        style={{
+          width: '100%',
+          height: 250,
+          borderRadius: 10,
+          overflow: 'hidden',
+        }}>
+        <Blurhash
+          blurhash="LKN]Rv%2Tw=w]~RBVZRi};RPxuwH"
+          style={styles.timelineImage}
+        />
+      </View> */}
       <FastImage
         style={styles.timelineImage}
         source={{
@@ -71,7 +84,7 @@ const styles = StyleSheet.create({
   timelineImage: {
     width: '100%',
     height: 250,
-    borderRadius: 8,
+    borderRadius: 20,
     elevation: 4,
   },
   timelineCardContent: {

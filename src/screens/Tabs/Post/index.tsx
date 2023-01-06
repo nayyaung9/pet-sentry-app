@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TabPostParamList} from '~utils/navigation/navigators';
 import Root from './Root';
-import TabShared from '../Shared';
+import TabSharedRoot from '../Shared';
 import {useTheme} from '~utils/styles/ThemeManager';
 import PostForm from './PostForm';
 import HeaderLeft from '~components/Header/Left';
@@ -51,7 +51,7 @@ const TabPost: React.FC = () => {
         })}
       />
 
-      {TabShared({ Stack })}
+      {TabSharedRoot({ Stack })}
     </Stack.Navigator>
   );
 };

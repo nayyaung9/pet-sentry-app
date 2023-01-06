@@ -116,7 +116,7 @@ const TimelineDetail: React.FC<
         <Button
           title="View on Map"
           icon={'md-map'}
-          onPress={() => navigation.navigate('Tab-Timeline-Map')}
+          onPress={() => navigation.navigate('Tab-Shared-Map')}
         />
       </View>
     </ScrollView>

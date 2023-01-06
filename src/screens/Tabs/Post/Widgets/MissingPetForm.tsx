@@ -125,7 +125,7 @@ const MissingPetForm = () => {
       <View style={{paddingBottom: StyleConstants.Spacing.M}}>
         <InputLabel>Missing here</InputLabel>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Tab-Timeline-Map')}
+          onPress={() => navigation.navigate('Tab-Shared-Map')}
           style={{
             borderBottomWidth: 1,
             borderBottomColor: '#eee',

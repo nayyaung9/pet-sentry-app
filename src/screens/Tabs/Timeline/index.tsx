@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TabTimelineParamList} from '~utils/navigation/navigators';
 import Root from './Root';
-import TabShared from '../Shared';
+import TabSharedRoot from '../Shared';
 import TimelineDetail from './TimelineDetail';
 import HeaderLeft from '~components/Header/Left';
 import {useTheme} from '~utils/styles/ThemeManager';
@@ -58,7 +58,7 @@ const TabProfile: React.FC = () => {
         })}
       />
 
-      {TabShared({ Stack })}
+      {TabSharedRoot({Stack})}
     </Stack.Navigator>
   );
 };
