@@ -56,7 +56,7 @@ type MutationVarsMissingPet = {
   gender: string;
   activityType: 'Missing' | 'Found';
   collarColor: string | null;
-  missingPlace: string | null,
+  address: string | null,
   geolocation: Array<Number | null>,
   information?: string;
   specialTraits?: string;

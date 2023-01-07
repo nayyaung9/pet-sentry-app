@@ -149,7 +149,7 @@ const MissingPetForm = () => {
       gender,
       activityType: 'Missing',
       collarColor: collarColor || null,
-      missingPlace: addressName,
+      address: addressName,
       geolocation: [pickedCoordinates.longitude, pickedCoordinates.latitude],
       information: comment,
       specialTraits: traits,

@@ -25,8 +25,8 @@ export type TabSharedStackParamList = {
   'Tab-Shared-Map': {
     isPin?: boolean;
     point?: {
-      latitude: Number,
-      longitude: Number,
+      latitude: Number | null,
+      longitude: Number | null,
     }
   };
 };

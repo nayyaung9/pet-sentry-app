@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import HeaderRight from '~components/Header/Right';
 import {StyleConstants} from '~utils/styles/constants';
+import {useMapState} from '~utils/states/map.state';
 
 const Route = ({route: {key}}: {route: any}) => {
   return <TimelineContainer queryKey={key} />;
@@ -23,6 +24,8 @@ const renderScene = SceneMap({
 
 const TimelineRoot = () => {
   const geocoderLocation = useGeoState(state => state.location);
+  const pickedCoordinates = useMapState(state => state.pickedCoordinates);
+
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
 
   const layout = useWindowDimensions();
@@ -73,7 +76,15 @@ const TimelineRoot = () => {
           )}
         </View>
         <HeaderRight
-          onPress={() => navigation.navigate('Tab-Shared-Map', {isPin: false})}
+          onPress={() =>
+            navigation.navigate('Tab-Shared-Map', {
+              isPin: false,
+              point: {
+                latitude: pickedCoordinates?.latitude,
+                longitude: pickedCoordinates?.longitude,
+              },
+            })
+          }
           content={'md-map'}
           color={'#fff'}
         />

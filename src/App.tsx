@@ -9,13 +9,12 @@ import log from '~utils/startup/log';
 import geolocation from '~utils/startup/geolocation';
 import {GEOCODER_ENDPOINT, GEOCODER_KEY} from '@env';
 import {useGeoState} from '~utils/states/geo.state';
-// import {getCredential} from '~utils/storage/keychain';
-import { useAuthState } from '~utils/states/auth.state';
+import {useMapState} from '~utils/states/map.state';
 
 const App: React.FC = () => {
   log('log', 'App', 'Rendering App');
   const setgeocoderLocation = useGeoState(state => state.setLocation);
-  // const setCredential = useAuthState(state => state.setCredential);
+  const setMapState = useMapState(state => state.setMapState);
 
   useEffect(() => {
     const mountBoot = async () => {
@@ -26,6 +25,14 @@ const App: React.FC = () => {
           geolocationResponse.length >= 1
         ) {
           const query = `${geolocationResponse[0]}, ${geolocationResponse[1]}`;
+
+          setMapState({
+            coordinates: {
+              latitude: geolocationResponse[0],
+              longitude: geolocationResponse[1],
+            },
+          });
+
           fetch(
             `${GEOCODER_ENDPOINT}?q=${query}&key=${GEOCODER_KEY}&language=en&pretty=1`,
             {
