@@ -22,6 +22,7 @@ const Post: React.FC = () => {
           onPress={() =>
             navigation.navigate('Tab-Post-Form', {actionType: activity?.type})
           }
+          style={{width: '100%'}}
         />
       ))}
     </View>

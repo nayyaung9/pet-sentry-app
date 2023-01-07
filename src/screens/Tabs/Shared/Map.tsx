@@ -6,8 +6,8 @@ import {TabSharedStackScreenProps} from '~utils/navigation/navigators';
 import mapStyles from './mapStyles.json';
 import {useTheme} from '~utils/styles/ThemeManager';
 import HeaderLeft from '~components/Header/Left';
-import geolocation from '~utils/startup/geolocation';
 import MapGenerateLabel from '~components/Shared/Map/MapGenerateLabel';
+import {useMapState} from '~utils/states/map.state';
 
 const initialRegion = {
   latitude: 16.833734,
@@ -19,14 +19,15 @@ const initialRegion = {
 const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
   navigation,
   route: {
-    params: {isPin = false},
+    params: {isPin = false, point},
   },
 }) => {
   const {colors} = useTheme();
+  const setMapState = useMapState(state => state.setMapState);
 
   const [region, setRegion] = useState({
-    latitude: 16.833734,
-    longitude: 96.167805,
+    latitude: point?.latitude,
+    longitude: point?.longitude,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
@@ -40,19 +41,6 @@ const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
     latitude: number;
     longitude: number;
   }) => setPinPoint({latitude, longitude});
-
-  useEffect(() => {
-    (async () => {
-      const geolocationResponse: any = await geolocation();
-      if (geolocationResponse) {
-        setRegion({
-          ...region,
-          latitude: geolocationResponse[0],
-          longitude: geolocationResponse[1],
-        });
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     navigation.setOptions({
@@ -72,9 +60,27 @@ const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
     });
   }, []);
 
+  const onConfirmLocationPoints = (location: string) => {
+    setMapState({
+      address: location,
+      coordinates: {
+        latitude: pinPoint?.latitude,
+        longitude: pinPoint?.longitude,
+      },
+    });
+  };
+
   return (
     <View style={{flex: 1}}>
-      {pinPoint && <MapGenerateLabel {...{pinPoint}} />}
+      {pinPoint && (
+        <MapGenerateLabel
+          {...{
+            pinPoint,
+            getMapInfo: (mapAddress: string) =>
+              onConfirmLocationPoints(mapAddress),
+          }}
+        />
+      )}
       <MapView
         style={{flex: 1}}
         initialRegion={initialRegion}

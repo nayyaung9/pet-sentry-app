@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {Pressable, View, ActivityIndicator} from 'react-native';
+import {Pressable, View, StyleProp, ViewStyle} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
@@ -11,8 +11,15 @@ interface ButtonProps {
   disabled?: boolean;
 
   onPress: () => void;
+  style?: StyleProp<ViewStyle>;
 }
-const Button = ({icon, title, disabled, onPress}: ButtonProps) => {
+const Button = ({
+  icon,
+  title,
+  disabled,
+  onPress,
+  style: customStyles,
+}: ButtonProps) => {
   const {theme, colors} = useTheme();
 
   const mainColor = useMemo(() => {
@@ -46,16 +53,18 @@ const Button = ({icon, title, disabled, onPress}: ButtonProps) => {
       onPress={onPress}
       disabled={disabled}
       children={children}
-      style={{
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: disabled ? colors.buttonDisable : colors.primary,
-        minHeight: 44,
-        marginVertical: StyleConstants.Spacing.M,
-        borderRadius: 10,
-      }}
+      style={[
+        {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: disabled ? colors.buttonDisable : colors.primary,
+          minHeight: 44,
+          marginVertical: StyleConstants.Spacing.M,
+          borderRadius: 10,
+        },
+        customStyles,
+      ]}
     />
   );
 };

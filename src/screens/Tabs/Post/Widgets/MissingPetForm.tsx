@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect, useCallback} from 'react';
 import {
   View,
   ScrollView,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import Button from '~components/widgets/Button';
@@ -15,24 +16,62 @@ import ActionSheet from '~components/widgets/ActionSheet';
 import InputLabel from '~components/widgets/InputLabel';
 import ThemeText from '~components/widgets/ThemeText';
 import Select from '~components/widgets/Select';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {StyleConstants} from '~utils/styles/constants';
-
-import moment from 'moment';
-import collar_colors from '~utils/constants/collar_colors.json';
-import pet_types from '~utils/constants/pet_types.json';
-import genders from '~utils/constants/genders.json';
-import {useMissingPetMutation} from '~utils/queryHooks/timeline';
-import {useNavigation} from '@react-navigation/native';
-import {TabTimelineParamList} from '~utils/navigation/navigators';
-import {StackNavigationProp} from '@react-navigation/stack';
 import PhotoUploader from '~components/PhotoUploader';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
+/** Utils and Scripts */
+import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {StyleConstants} from '~utils/styles/constants';
+import {useMissingPetMutation} from '~utils/queryHooks/timeline';
+import {TabTimelineParamList} from '~utils/navigation/navigators';
+import {StackNavigationProp} from '@react-navigation/stack';
+import geolocation from '~utils/startup/geolocation';
+
+/** JSON Data */
+import collar_colors from '~utils/constants/collar_colors.json';
+import pet_types from '~utils/constants/pet_types.json';
+import genders from '~utils/constants/genders.json';
+
+/** States */
+import {useMapState} from '~utils/states/map.state';
+import shallow from 'zustand/shallow';
+import {useTheme} from '~utils/styles/ThemeManager';
+
 const MissingPetForm = () => {
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
+
+  const [pickedCoordinates, addressName, setMapState] = useMapState(
+    state => [state.pickedCoordinates, state.addressName, state.setMapState],
+    shallow,
+  );
+
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  useEffect(() => {
+    (async () => {
+      const checkIsCoorinatesPicked =
+        pickedCoordinates.latitude != 0 && pickedCoordinates.longitude != 0;
+
+      if (checkIsCoorinatesPicked && !addressName) {
+        const geolocationResponse = await geolocation();
+        if (geolocationResponse) {
+          setInitialRegion({
+            latitude: geolocationResponse[0],
+            longitude: geolocationResponse[1],
+          });
+        }
+      }
+    })();
+  }, [navigation]);
+
   const actionSheetRef = useRef<RBSheet>(null);
   const petTypeActionSheetRef = useRef<RBSheet>(null);
+  const {colors} = useTheme();
 
   const [petType, setPetType] = useState('');
   const [collarColor, setCollarColor] = useState('');
@@ -102,6 +141,25 @@ const MissingPetForm = () => {
     });
   };
 
+  const onCheckInitialRegionForMap = useCallback(() => {
+    console.log(pickedCoordinates.latitude, 'init reg')
+    if (pickedCoordinates.latitude && pickedCoordinates.longitude) {
+      return {
+        latitude: pickedCoordinates.latitude,
+        longitude: pickedCoordinates.longitude,
+      };
+    }
+
+    if(initialRegion.latitude && initialRegion.longitude) {
+      return {
+        latitude: initialRegion.latitude,
+        longitude: initialRegion.longitude,
+      };
+    }
+  }, [[pickedCoordinates, initialRegion]]);
+
+  console.log('onCheckInitialRegionForMap', onCheckInitialRegionForMap())
+
   return (
     <ScrollView
       style={{flex: 1}}
@@ -127,9 +185,13 @@ const MissingPetForm = () => {
       <View style={{paddingBottom: StyleConstants.Spacing.M}}>
         <InputLabel>Missing here</InputLabel>
         <TouchableOpacity
+          disabled={
+            initialRegion?.latitude == 0 && initialRegion?.longitude == 0
+          }
           onPress={() =>
             navigation.navigate('Tab-Shared-Map', {
               isPin: true,
+              point: onCheckInitialRegionForMap(),
             })
           }
           style={{
@@ -139,10 +201,14 @@ const MissingPetForm = () => {
             borderBottomWidth: 1,
             borderBottomColor: '#eee',
           }}>
-          <ThemeText>
-            အမှတ် ၅၅၊ ၆လွှာ၊ ခေါင်းရင်းခန်း၊ ဩဘာလမ်း အလယ်၊ ကျောက်မြောင်း တာမွေ
-          </ThemeText>
-          <Ionicons name="md-chevron-forward-outline" />
+          {initialRegion?.latitude == 0 && initialRegion?.longitude == 0 ? (
+            <ActivityIndicator color={colors.textDisable} />
+          ) : (
+            <>
+              <ThemeText>{addressName || 'Enter your address...'}</ThemeText>
+              <Ionicons name="md-chevron-forward-outline" />
+            </>
+          )}
         </TouchableOpacity>
       </View>
 

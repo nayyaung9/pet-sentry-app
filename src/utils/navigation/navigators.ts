@@ -24,6 +24,10 @@ export type ScreenTabsScreenProps<T extends keyof ScreenTabsStackParamList> =
 export type TabSharedStackParamList = {
   'Tab-Shared-Map': {
     isPin?: boolean;
+    point?: {
+      latitude: Number,
+      longitude: Number,
+    }
   };
 };
 export type TabSharedStackScreenProps<T extends keyof TabSharedStackParamList> =

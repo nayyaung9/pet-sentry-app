@@ -14,8 +14,10 @@ type MapGenerateLabelProps = {
     latitude: number;
     longitude: number;
   };
+  getMapInfo: (mapAddress: string) => void;
 };
-const MapGenerateLabel = ({pinPoint}: MapGenerateLabelProps) => {
+
+const MapGenerateLabel = ({pinPoint, getMapInfo}: MapGenerateLabelProps) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
   const [location, setLocation] = useState('');
@@ -46,8 +48,21 @@ const MapGenerateLabel = ({pinPoint}: MapGenerateLabelProps) => {
     }
   }, [pinPoint]);
 
+  const onConfirmMapInfo = () => {
+    getMapInfo(location);
+    navigation.goBack();
+  };
+
   return (
     <>
+      <View style={styles.chooseButton}>
+        <Button
+          title="Confirm"
+          disabled={loading || location == ""}
+          onPress={onConfirmMapInfo}
+          style={{paddingHorizontal: StyleConstants.Spacing.M}}
+        />
+      </View>
       <View style={styles.container}>
         <ThemeText color={loading ? colors.textDisable : '#000'}>
           {location || 'Please pin your location on map.'}
@@ -58,6 +73,7 @@ const MapGenerateLabel = ({pinPoint}: MapGenerateLabelProps) => {
         <Button
           title="Or enter your address here"
           onPress={() => navigation.goBack()}
+          style={{paddingHorizontal: StyleConstants.Spacing.M}}
         />
       </View>
     </>
@@ -71,7 +87,7 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.S,
     backgroundColor: '#fff',
     position: 'absolute',
-    top: 60,
+    top: 80,
     zIndex: 9,
     elevation: 2,
   },
@@ -80,6 +96,12 @@ const styles = StyleSheet.create({
     bottom: 10,
     zIndex: 9,
     right: 16,
+  },
+  chooseButton: {
+    position: 'absolute',
+    top: 10,
+    right: 16,
+    zIndex: 9,
   },
 });
 
