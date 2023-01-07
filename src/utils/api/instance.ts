@@ -3,7 +3,7 @@ import {mapEnvironment} from './environment';
 import {ENDPOINT_SECRET_KEY} from '@env';
 
 const PET_SENTRY_ENDPOINT = mapEnvironment({
-  development: '192.168.1.7:8000',
+  development: '192.168.1.4:8000',
   release: 'release-endpoint',
 });
 

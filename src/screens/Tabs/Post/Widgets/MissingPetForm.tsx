@@ -127,12 +127,16 @@ const MissingPetForm = () => {
         <TouchableOpacity
           onPress={() => navigation.navigate('Tab-Shared-Map')}
           style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             borderBottomWidth: 1,
             borderBottomColor: '#eee',
           }}>
           <ThemeText>
             အမှတ် ၅၅၊ ၆လွှာ၊ ခေါင်းရင်းခန်း၊ ဩဘာလမ်း အလယ်၊ ကျောက်မြောင်း တာမွေ
           </ThemeText>
+          <Ionicons name="md-chevron-forward-outline" />
         </TouchableOpacity>
       </View>
 

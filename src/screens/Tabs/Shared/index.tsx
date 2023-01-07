@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import TabSharedMap from '~screens/Tabs/Shared/Map';
+import TabSharedMap from './Map';
 
 const TabShared = ({
   Stack,
@@ -8,7 +8,7 @@ const TabShared = ({
   Stack: ReturnType<typeof createNativeStackNavigator>;
 }) => {
   return (
-    <Stack.Group>
+    <Stack.Group screenOptions={{ headerShown: false }}>
       <Stack.Screen
         key="Tab-Shared-Map"
         name="Tab-Shared-Map"
