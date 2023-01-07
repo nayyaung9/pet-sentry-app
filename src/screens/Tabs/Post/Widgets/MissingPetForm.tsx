@@ -129,12 +129,28 @@ const MissingPetForm = () => {
   });
 
   const onSubmitMissingPet = () => {
+    // const data = {
+    //   petName,
+    //   petType,
+    //   gender,
+    //   activityType: 'Missing',
+    //   collarColor: collarColor || null,
+    //   missingPlace: addressName,
+    //   geolocation: [pickedCoordinates.longitude, pickedCoordinates.latitude],
+    //   information: comment,
+    //   specialTraits: traits,
+    //   activityDate: date,
+    // };
+
+    // console.log('Data', JSON.stringify(data, null, 2));
     return missingPetAction({
       petName,
       petType,
       gender,
       activityType: 'Missing',
       collarColor: collarColor || null,
+      missingPlace: addressName,
+      geolocation: [pickedCoordinates.longitude, pickedCoordinates.latitude],
       information: comment,
       specialTraits: traits,
       activityDate: date,
@@ -142,7 +158,6 @@ const MissingPetForm = () => {
   };
 
   const onCheckInitialRegionForMap = useCallback(() => {
-    console.log(pickedCoordinates.latitude, 'init reg')
     if (pickedCoordinates.latitude && pickedCoordinates.longitude) {
       return {
         latitude: pickedCoordinates.latitude,
@@ -150,15 +165,13 @@ const MissingPetForm = () => {
       };
     }
 
-    if(initialRegion.latitude && initialRegion.longitude) {
+    if (initialRegion.latitude && initialRegion.longitude) {
       return {
         latitude: initialRegion.latitude,
         longitude: initialRegion.longitude,
       };
     }
   }, [[pickedCoordinates, initialRegion]]);
-
-  console.log('onCheckInitialRegionForMap', onCheckInitialRegionForMap())
 
   return (
     <ScrollView
