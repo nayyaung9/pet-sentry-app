@@ -84,7 +84,10 @@ const TimelineDetail: React.FC<
 
             {data?.information != '' && (
               <View style={{marginBottom: StyleConstants.Spacing.M}}>
-                <ThemeText color={'rgba(0, 0, 0, 0.6)'} fontStyle={'S'} style={{ marginBottom: StyleConstants.Spacing.S }}>
+                <ThemeText
+                  color={'rgba(0, 0, 0, 0.6)'}
+                  fontStyle={'S'}
+                  style={{marginBottom: StyleConstants.Spacing.S}}>
                   Information
                 </ThemeText>
                 <ThemeText>{data?.information}</ThemeText>
@@ -93,7 +96,10 @@ const TimelineDetail: React.FC<
 
             {data?.specialTraits != '' && data?.specialTraits != null && (
               <View style={{marginBottom: StyleConstants.Spacing.M}}>
-                <ThemeText color={'rgba(0, 0, 0, 0.6)'} fontStyle={'S'} style={{ marginBottom: StyleConstants.Spacing.S }}>
+                <ThemeText
+                  color={'rgba(0, 0, 0, 0.6)'}
+                  fontStyle={'S'}
+                  style={{marginBottom: StyleConstants.Spacing.S}}>
                   Special Traits
                 </ThemeText>
                 <ThemeText>{data?.specialTraits}</ThemeText>
@@ -116,7 +122,7 @@ const TimelineDetail: React.FC<
         <Button
           title="View on Map"
           icon={'md-map'}
-          onPress={() => navigation.navigate('Tab-Shared-Map')}
+          onPress={() => navigation.navigate('Tab-Shared-Map', {isPin: false})}
         />
       </View>
     </ScrollView>

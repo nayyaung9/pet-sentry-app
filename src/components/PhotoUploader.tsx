@@ -63,9 +63,8 @@ const PhotoUploader = () => {
             marginTop: StyleConstants.Spacing.M,
           }}>
           {dummyImages?.map((image, index) => (
-            <View>
+            <View key={index}>
               <Image
-                key={index}
                 source={{uri: image}}
                 style={{
                   width: 50,

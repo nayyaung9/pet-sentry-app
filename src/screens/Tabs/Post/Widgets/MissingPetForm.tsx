@@ -27,7 +27,7 @@ import {useNavigation} from '@react-navigation/native';
 import {TabTimelineParamList} from '~utils/navigation/navigators';
 import {StackNavigationProp} from '@react-navigation/stack';
 import PhotoUploader from '~components/PhotoUploader';
-import RBSheet from "react-native-raw-bottom-sheet";
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 const MissingPetForm = () => {
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
@@ -127,7 +127,11 @@ const MissingPetForm = () => {
       <View style={{paddingBottom: StyleConstants.Spacing.M}}>
         <InputLabel>Missing here</InputLabel>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Tab-Shared-Map')}
+          onPress={() =>
+            navigation.navigate('Tab-Shared-Map', {
+              isPin: true,
+            })
+          }
           style={{
             flexDirection: 'row',
             alignItems: 'center',
