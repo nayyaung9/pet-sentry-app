@@ -23,14 +23,16 @@ import collar_colors from '~utils/constants/collar_colors.json';
 import pet_types from '~utils/constants/pet_types.json';
 import genders from '~utils/constants/genders.json';
 import {useMissingPetMutation} from '~utils/queryHooks/timeline';
-import { useNavigation } from '@react-navigation/native';
-import { TabTimelineParamList } from '~utils/navigation/navigators';
-import { StackNavigationProp } from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
+import {TabTimelineParamList} from '~utils/navigation/navigators';
+import {StackNavigationProp} from '@react-navigation/stack';
+import PhotoUploader from '~components/PhotoUploader';
+import RBSheet from "react-native-raw-bottom-sheet";
 
 const MissingPetForm = () => {
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
-  const actionSheetRef = useRef<any>(null);
-  const petTypeActionSheetRef = useRef<any>(null);
+  const actionSheetRef = useRef<RBSheet>(null);
+  const petTypeActionSheetRef = useRef<RBSheet>(null);
 
   const [petType, setPetType] = useState('');
   const [collarColor, setCollarColor] = useState('');
@@ -157,11 +159,7 @@ const MissingPetForm = () => {
       <InputLabel noPadding>
         The more photos you add, the better the search will work
       </InputLabel>
-      <Button
-        title="Upload Photo"
-        icon="md-camera-outline"
-        onPress={() => console.log('Post')}
-      />
+      <PhotoUploader />
 
       <Input
         label="Special traits*"
