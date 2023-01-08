@@ -27,6 +27,7 @@ const TabProfile: React.FC = () => {
         name="Tab-Timeline-Detail"
         component={TimelineDetail}
         options={({navigation, route: {params}}: any) => ({
+          headerShown: false,
           headerShadowVisible: false,
           headerStyle: {backgroundColor: colors.primary},
           headerBackVisible: false,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
 import ThemeText from './widgets/ThemeText';
@@ -7,25 +7,33 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface MenuRowProps {
   isDisable?: boolean;
-  icon: string;
+  icon: React.ReactNode;
   label: string;
+  value: string;
 }
-const MenuRow = ({isDisable = false, icon, label}: MenuRowProps) => {
+const MenuRow = ({isDisable = false, icon, label, value}: MenuRowProps) => {
   const {colors} = useTheme();
   return (
     <TouchableOpacity
       activeOpacity={1}
       disabled
       style={{
-        marginBottom: StyleConstants.Spacing.M,
+        marginVertical: StyleConstants.Spacing.S,
         flexDirection: 'row',
+        alignItems: 'center',
       }}>
-      <Ionicons name={icon} size={20} color={'rgba(0, 0, 0, 0.6)'} />
-      <ThemeText
-        color={colors.textSecondary}
-        style={{flex: 1, paddingLeft: StyleConstants.Spacing.S}}>
-        {label}
-      </ThemeText>
+      {icon}
+      <View style={{paddingLeft: StyleConstants.Spacing.M}}>
+        <ThemeText
+          color={colors.textSecondary}
+          fontStyle={'XS'}
+          style={{flex: 1}}>
+          {label}
+        </ThemeText>
+        <ThemeText color={'#000'} style={{flex: 1}}>
+          {value}
+        </ThemeText>
+      </View>
     </TouchableOpacity>
   );
 };

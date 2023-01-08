@@ -14,8 +14,8 @@ interface PetOwnerProps {
 const PetOwner = ({ownerProfile, ownerName}: PetOwnerProps) => {
   const {colors} = useTheme();
   return (
-    <View style={{marginBottom: StyleConstants.Spacing.M}}>
-      <ThemeText color={'rgba(0, 0, 0, 0.6)'} fontStyle={'S'}>Owner Info</ThemeText>
+    <View style={{ paddingTop: StyleConstants.Spacing.S, paddingBottom: StyleConstants.Spacing.M }}>
+      <ThemeText color={colors.textSecondary} fontStyle={'XS'}>Owner Info</ThemeText>
       <View
         style={{
           flexDirection: 'row',
