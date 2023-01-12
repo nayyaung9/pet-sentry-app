@@ -11,6 +11,10 @@ interface GeoState {
 
 export const useGeoState = create<GeoState>()(set => ({
   location: '',
+  userCoordinates: {
+    latitude: 0,
+    longitude: 0,
+  },
   setLocation: name => set({location: name}),
   setUserAddress: name => set({userAddress: name}),
   setUserCoordinates: coordinates =>

@@ -21,8 +21,8 @@ export const useMapState = create<MapState>()(set => ({
   setMapState: ({coordinates, address}) =>
     set({
       pickedCoordinates: {
-        latitude: coordinates?.latitude,
-        longitude: coordinates?.longitude,
+        latitude: coordinates?.latitude as number,
+        longitude: coordinates?.longitude as number,
       },
       addressName: address,
     }),

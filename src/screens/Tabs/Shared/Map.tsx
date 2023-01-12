@@ -8,10 +8,11 @@ import {useTheme} from '~utils/styles/ThemeManager';
 import HeaderLeft from '~components/Header/Left';
 import MapGenerateLabel from '~components/Shared/Map/MapGenerateLabel';
 import {useMapState} from '~utils/states/map.state';
+import geolocationConstants from '~utils/constants/geolocation.json';
 
 const initialRegion = {
-  latitude: 16.833734,
-  longitude: 96.167805,
+  latitude: geolocationConstants.initialLatitude,
+  longitude: geolocationConstants.initialLongitude,
   latitudeDelta: 0.0922,
   longitudeDelta: 0.0421,
 };
@@ -26,15 +27,27 @@ const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
   const setMapState = useMapState(state => state.setMapState);
 
   const [region] = useState({
-    latitude: point?.latitude,
-    longitude: point?.longitude,
+    latitude:
+      point?.latitude == 0
+        ? initialRegion?.latitude
+        : (point?.latitude as number),
+    longitude:
+      point?.longitude == 0
+        ? initialRegion?.longitude
+        : (point?.longitude as number),
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
 
   const [pinPoint, setPinPoint] = useState({
-    latitude: point?.latitude as number,
-    longitude: point?.longitude as number,
+    latitude:
+      point?.latitude == 0
+        ? initialRegion?.latitude
+        : (point?.latitude as number),
+    longitude:
+      point?.longitude == 0
+        ? initialRegion?.longitude
+        : (point?.longitude as number),
   });
 
   const onGetPinPointOnMap = ({
@@ -67,8 +80,8 @@ const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
     setMapState({
       address: location,
       coordinates: {
-        latitude: pinPoint?.latitude as number,
-        longitude: pinPoint?.longitude as number,
+        latitude: pinPoint?.latitude!,
+        longitude: pinPoint?.longitude!,
       },
     });
   };

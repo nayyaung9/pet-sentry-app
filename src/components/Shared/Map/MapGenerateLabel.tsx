@@ -1,11 +1,18 @@
 import React from 'react';
 import ThemeText from '~components/widgets/ThemeText';
-import {StyleSheet, View, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  ActivityIndicator,
+  Pressable,
+} from 'react-native';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
 import Button from '~components/widgets/Button';
 import {useNavigation} from '@react-navigation/native';
 import {useGeocodingQuery} from '~utils/queryHooks/geocoding';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const device = Dimensions.get('window');
 
@@ -33,47 +40,49 @@ const MapGenerateLabel = ({pinPoint, getMapInfo}: MapGenerateLabelProps) => {
 
   return (
     <>
-      <View style={styles.chooseButton}>
-        <Button
-          title="Confirm"
-          disabled={isLoading || data == ''}
-          onPress={onConfirmMapInfo}
-          style={{paddingHorizontal: StyleConstants.Spacing.M}}
-        />
-      </View>
-      <View style={styles.container}>
-        <ThemeText color={isLoading ? colors.textDisable : '#000'}>
-          {data || 'Please pin your location on map.'}
-        </ThemeText>
-      </View>
-
-      <View style={styles.manualLocationView}>
-        <Button
-          title="Or enter your address here"
-          onPress={() => navigation.goBack()}
-          style={{paddingHorizontal: StyleConstants.Spacing.M}}
-        />
+      <View style={styles.mapSearchView}>
+        <View style={styles.mapSearchHeader}>
+          {isLoading && (
+            <View style={{position: 'absolute', zIndex: 9, left: 16, top: 10}}>
+              <ActivityIndicator color={colors.primary} size={'large'} />
+            </View>
+          )}
+          <ThemeText
+            style={{flex: 1}}
+            color={isLoading ? colors.textDisable : '#000'}
+            numberOfLines={1}>
+            {data || 'Please pin your location on map.'}
+          </ThemeText>
+          <Pressable
+            disabled={isLoading || data == ''}
+            onPress={onConfirmMapInfo}
+            children={() => (
+              <Ionicons name="md-close" color={'#ddd'} size={18} />
+            )}
+          />
+        </View>
       </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: device?.width - 32,
-    marginHorizontal: StyleConstants.Spacing.M,
-    padding: StyleConstants.Spacing.S,
-    backgroundColor: '#fff',
+  mapSearchView: {
     position: 'absolute',
-    top: 80,
+    top: 60,
     zIndex: 9,
-    elevation: 2,
+    width: '100%',
+    alignItems: 'center',
   },
-  manualLocationView: {
-    position: 'absolute',
-    bottom: 10,
-    zIndex: 9,
-    right: 16,
+  mapSearchHeader: {
+    width: device?.width - 48,
+    padding: StyleConstants.Spacing.M,
+    backgroundColor: '#fff',
+    elevation: 10,
+    borderRadius: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   chooseButton: {
     position: 'absolute',

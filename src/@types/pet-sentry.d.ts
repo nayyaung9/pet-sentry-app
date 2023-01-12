@@ -20,7 +20,7 @@ declare namespace PetSentry {
   };
 
   type CoordinatesProps = {
-    latitude: Number;
-    longitude: Number;
+    latitude: number;
+    longitude: number;
   }
 }

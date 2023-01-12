@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect, useCallback} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   ScrollView,
@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  ActivityIndicator,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import Button from '~components/widgets/Button';
@@ -36,24 +35,17 @@ import genders from '~utils/constants/genders.json';
 /** States */
 import {useMapState} from '~utils/states/map.state';
 import shallow from 'zustand/shallow';
-import {useTheme} from '~utils/styles/ThemeManager';
 
 const MissingPetForm = () => {
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
 
-  const [pickedCoordinates, addressName, setMapState] = useMapState(
-    state => [state.pickedCoordinates, state.addressName, state.setMapState],
+  const [pickedCoordinates, addressName] = useMapState(
+    state => [state.pickedCoordinates, state.addressName],
     shallow,
   );
 
-  const [initialRegion, setInitialRegion] = useState({
-    latitude: pickedCoordinates?.latitude,
-    longitude: pickedCoordinates?.longitude,
-  });
-
   const actionSheetRef = useRef<RBSheet>(null);
   const petTypeActionSheetRef = useRef<RBSheet>(null);
-  const {colors} = useTheme();
 
   const [petType, setPetType] = useState('');
   const [collarColor, setCollarColor] = useState('');
@@ -139,22 +131,6 @@ const MissingPetForm = () => {
     });
   };
 
-  const onCheckInitialRegionForMap = useCallback(() => {
-    if (pickedCoordinates.latitude && pickedCoordinates.longitude) {
-      return {
-        latitude: pickedCoordinates.latitude,
-        longitude: pickedCoordinates.longitude,
-      };
-    }
-
-    if (initialRegion.latitude && initialRegion.longitude) {
-      return {
-        latitude: initialRegion.latitude,
-        longitude: initialRegion.longitude,
-      };
-    }
-  }, [[pickedCoordinates, initialRegion]]);
-
   return (
     <ScrollView
       style={{flex: 1}}
@@ -180,13 +156,17 @@ const MissingPetForm = () => {
       <View style={{paddingBottom: StyleConstants.Spacing.M}}>
         <InputLabel>Missing here</InputLabel>
         <TouchableOpacity
-          disabled={
-            initialRegion?.latitude == 0 && initialRegion?.longitude == 0
-          }
+          // disabled={
+          //   pickedCoordinates?.latitude == 0 &&
+          //   pickedCoordinates?.longitude == 0
+          // }
           onPress={() =>
             navigation.navigate('Tab-Shared-Map', {
               isPin: true,
-              point: onCheckInitialRegionForMap(),
+              point: {
+                latitude: pickedCoordinates?.latitude,
+                longitude: pickedCoordinates?.longitude,
+              },
             })
           }
           style={{
@@ -196,14 +176,8 @@ const MissingPetForm = () => {
             borderBottomWidth: 1,
             borderBottomColor: '#eee',
           }}>
-          {initialRegion?.latitude == 0 && initialRegion?.longitude == 0 ? (
-            <ActivityIndicator color={colors.textDisable} />
-          ) : (
-            <>
-              <ThemeText>{addressName || 'Enter your address...'}</ThemeText>
-              <Ionicons name="md-chevron-forward-outline" />
-            </>
-          )}
+          <ThemeText>{addressName ?? 'Enter your address...'}</ThemeText>
+          <Ionicons name="md-chevron-forward-outline" />
         </TouchableOpacity>
       </View>
 
