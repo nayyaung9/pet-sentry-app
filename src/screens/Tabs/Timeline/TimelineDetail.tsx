@@ -72,7 +72,9 @@ const TimelineDetail: React.FC<
 
         <View style={styles.contentContainer}>
           {isLoading ? (
-            <ActivityIndicator color={colors.primary} size={'large'} />
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator color={'#fff'} size={'large'} />
+            </View>
           ) : (
             <>
               <View
@@ -240,6 +242,11 @@ const styles = StyleSheet.create({
     top: 40,
     zIndex: 9,
     marginHorizontal: StyleConstants.Spacing.M,
+  },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backButton: {
     width: 32,

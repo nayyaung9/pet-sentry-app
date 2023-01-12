@@ -25,14 +25,17 @@ const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
   const {colors} = useTheme();
   const setMapState = useMapState(state => state.setMapState);
 
-  const [region, setRegion] = useState({
+  const [region] = useState({
     latitude: point?.latitude,
     longitude: point?.longitude,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
 
-  const [pinPoint, setPinPoint] = useState({latitude: 0.0, longitude: 0.0});
+  const [pinPoint, setPinPoint] = useState({
+    latitude: point?.latitude as number,
+    longitude: point?.longitude as number,
+  });
 
   const onGetPinPointOnMap = ({
     latitude,
@@ -64,15 +67,15 @@ const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
     setMapState({
       address: location,
       coordinates: {
-        latitude: pinPoint?.latitude,
-        longitude: pinPoint?.longitude,
+        latitude: pinPoint?.latitude as number,
+        longitude: pinPoint?.longitude as number,
       },
     });
   };
 
   return (
     <View style={{flex: 1}}>
-      {pinPoint && (
+      {isPin && (
         <MapGenerateLabel
           {...{
             pinPoint,
@@ -90,8 +93,8 @@ const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
         {pinPoint && (
           <Marker
             coordinate={{
-              latitude: pinPoint?.latitude,
-              longitude: pinPoint?.longitude,
+              latitude: pinPoint?.latitude as number,
+              longitude: pinPoint?.longitude as number,
             }}
           />
         )}

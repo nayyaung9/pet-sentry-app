@@ -1,26 +1,21 @@
 import create from 'zustand';
 
-interface CoordinatesProps {
-  latitude: Number | null;
-  longitude: Number | null;
-}
-
 interface MapState {
-  pickedCoordinates: CoordinatesProps;
+  pickedCoordinates: PetSentry.CoordinatesProps;
   addressName: string | null;
   setMapState: ({
     coordinates,
     address,
   }: {
-    coordinates: CoordinatesProps;
+    coordinates?: PetSentry.CoordinatesProps;
     address?: string | null;
   }) => void;
 }
 
 export const useMapState = create<MapState>()(set => ({
   pickedCoordinates: {
-    latitude: null,
-    longitude: null,
+    latitude: 0,
+    longitude: 0,
   },
   addressName: null,
   setMapState: ({coordinates, address}) =>

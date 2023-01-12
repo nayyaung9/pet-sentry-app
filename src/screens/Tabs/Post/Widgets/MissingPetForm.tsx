@@ -27,7 +27,6 @@ import {StyleConstants} from '~utils/styles/constants';
 import {useMissingPetMutation} from '~utils/queryHooks/timeline';
 import {TabTimelineParamList} from '~utils/navigation/navigators';
 import {StackNavigationProp} from '@react-navigation/stack';
-import geolocation from '~utils/startup/geolocation';
 
 /** JSON Data */
 import collar_colors from '~utils/constants/collar_colors.json';
@@ -48,26 +47,9 @@ const MissingPetForm = () => {
   );
 
   const [initialRegion, setInitialRegion] = useState({
-    latitude: 0,
-    longitude: 0,
+    latitude: pickedCoordinates?.latitude,
+    longitude: pickedCoordinates?.longitude,
   });
-
-  useEffect(() => {
-    (async () => {
-      const checkIsCoorinatesPicked =
-        pickedCoordinates.latitude != 0 && pickedCoordinates.longitude != 0;
-
-      if (checkIsCoorinatesPicked && !addressName) {
-        const geolocationResponse = await geolocation();
-        if (geolocationResponse) {
-          setInitialRegion({
-            latitude: geolocationResponse[0],
-            longitude: geolocationResponse[1],
-          });
-        }
-      }
-    })();
-  }, [navigation]);
 
   const actionSheetRef = useRef<RBSheet>(null);
   const petTypeActionSheetRef = useRef<RBSheet>(null);

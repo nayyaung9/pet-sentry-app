@@ -18,4 +18,9 @@ declare namespace PetSentry {
     specialTraits?: string;
     activityDate: string;
   };
+
+  type CoordinatesProps = {
+    latitude: Number;
+    longitude: Number;
+  }
 }

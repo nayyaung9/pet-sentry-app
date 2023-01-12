@@ -1,56 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import ThemeText from '~components/widgets/ThemeText';
 import {StyleSheet, View, Dimensions} from 'react-native';
 import {StyleConstants} from '~utils/styles/constants';
-import {GEOCODER_ENDPOINT, GEOCODER_KEY} from '@env';
 import {useTheme} from '~utils/styles/ThemeManager';
 import Button from '~components/widgets/Button';
 import {useNavigation} from '@react-navigation/native';
+import {useGeocodingQuery} from '~utils/queryHooks/geocoding';
 
 const device = Dimensions.get('window');
 
 type MapGenerateLabelProps = {
-  pinPoint: {
-    latitude: number;
-    longitude: number;
-  };
+  pinPoint: PetSentry.CoordinatesProps;
   getMapInfo: (mapAddress: string) => void;
 };
 
 const MapGenerateLabel = ({pinPoint, getMapInfo}: MapGenerateLabelProps) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
-  const [location, setLocation] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (pinPoint?.latitude != 0 && pinPoint?.longitude != 0) {
-      setLoading(true);
-      const query = `${pinPoint?.latitude}, ${pinPoint?.longitude}`;
-      fetch(
-        `${GEOCODER_ENDPOINT}?q=${query}&key=${GEOCODER_KEY}&language=en&pretty=1`,
-        {
-          method: 'GET',
-        },
-      )
-        .then(res => res.json())
-        .then(response => {
-          const {results} = response;
-          const {suburb} = results[0] && results[0]?.components;
-          const residential =
-            (results[0] && results[0]?.components?.residential) || '';
-          const formattedAddress = results[0]?.formatted;
-          const geocodingAddress = `${suburb},${residential}${formattedAddress}`;
-          setLoading(false);
-          setLocation(geocodingAddress);
-        })
-        .catch(err => setLoading(false));
-    }
-  }, [pinPoint]);
+  const query = `${pinPoint?.latitude}, ${pinPoint?.longitude}`;
+
+  const {isLoading, data} = useGeocodingQuery({
+    coordinates: query,
+  });
 
   const onConfirmMapInfo = () => {
-    getMapInfo(location);
-    navigation.goBack();
+    if (data) {
+      getMapInfo(data);
+      navigation.goBack();
+    }
   };
 
   return (
@@ -58,14 +36,14 @@ const MapGenerateLabel = ({pinPoint, getMapInfo}: MapGenerateLabelProps) => {
       <View style={styles.chooseButton}>
         <Button
           title="Confirm"
-          disabled={loading || location == ""}
+          disabled={isLoading || data == ''}
           onPress={onConfirmMapInfo}
           style={{paddingHorizontal: StyleConstants.Spacing.M}}
         />
       </View>
       <View style={styles.container}>
-        <ThemeText color={loading ? colors.textDisable : '#000'}>
-          {location || 'Please pin your location on map.'}
+        <ThemeText color={isLoading ? colors.textDisable : '#000'}>
+          {data || 'Please pin your location on map.'}
         </ThemeText>
       </View>
 
