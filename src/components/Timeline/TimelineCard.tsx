@@ -1,24 +1,23 @@
-import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import ThemeText from '~components/widgets/ThemeText';
-import FastImage from 'react-native-fast-image';
-import {useNavigation} from '@react-navigation/native';
-import {TabTimelineParamList} from '~utils/navigation/navigators';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useTheme} from '~utils/styles/ThemeManager';
-import {StyleConstants} from '~utils/styles/constants';
-import moment from 'moment';
-import {Blurhash} from 'react-native-blurhash';
+import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import ThemeText from "~components/widgets/ThemeText";
+import { useNavigation } from "@react-navigation/native";
+import { TabTimelineParamList } from "~utils/navigation/navigators";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useTheme } from "~utils/styles/ThemeManager";
+import { StyleConstants } from "~utils/styles/constants";
+import moment from "moment";
+import NeatlyImage from "~components/widgets/NeatlyImage";
 
-const TimelineCard = ({item}: {item: any}) => {
-  const {colors} = useTheme();
+const TimelineCard = ({ item }: { item: any }) => {
+  const { colors } = useTheme();
   const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
 
   return (
     <TouchableOpacity
       activeOpacity={1}
       onPress={() =>
-        navigation.navigate('Tab-Timeline-Detail', {
+        navigation.navigate("Tab-Timeline-Detail", {
           petId: item?._id,
           petName: item?.petName,
         })
@@ -28,44 +27,35 @@ const TimelineCard = ({item}: {item: any}) => {
         {
           marginBottom: StyleConstants.Spacing.M,
         },
-      ]}>
-      {/* <View
-        style={{
-          width: '100%',
-          height: 250,
-          borderRadius: 10,
-          overflow: 'hidden',
-        }}>
-        <Blurhash
-          blurhash="LKN]Rv%2Tw=w]~RBVZRi};RPxuwH"
-          style={styles.timelineImage}
-        />
-      </View> */}
-      <FastImage
-        style={styles.timelineImage}
-        source={{
-          uri: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHBldHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-          priority: FastImage.priority.normal,
+      ]}
+    >
+      <NeatlyImage
+        uri={{
+          remote:
+            "https://images.pexels.com/photos/7726294/pexels-photo-7726294.jpeg?auto=compress&cs=tinysrgb&w=600",
         }}
-        resizeMode={FastImage.resizeMode.cover}
+        imageStyle={styles.timelineImage}
+        blurHash="UNG[cp~p%0xC4:$eofX8n$IoIpayPCNboJni"
+        containerStyle={styles.timelineCardImageBlurHashContainer}
       />
       <View style={styles.timelineCardContent}>
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <ThemeText fontStyle="L" fontWeight={'Medium'} color={colors.primary}>
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <ThemeText fontStyle="L" fontWeight={"Medium"} color={colors.primary}>
             {item?.petName}
           </ThemeText>
-          <ThemeText fontStyle={'XS'} color={'rgba(0, 0, 0, 0.6)'}>
-            {moment(item?.createdAt).format('MMM, DDD, YYYY')}
+          <ThemeText fontStyle={"XS"} color={"rgba(0, 0, 0, 0.6)"}>
+            {moment(item?.createdAt).format("MMM, DDD, YYYY")}
           </ThemeText>
         </View>
 
         {(item?.information || item?.specialTraits) && (
-          <ThemeText fontStyle={'S'} fontWeight={'Light'} numberOfLines={2}>
+          <ThemeText fontStyle={"S"} fontWeight={"Light"} numberOfLines={2}>
             {item?.information || item?.specialTraits}
           </ThemeText>
         )}
@@ -76,13 +66,13 @@ const TimelineCard = ({item}: {item: any}) => {
 
 const styles = StyleSheet.create({
   timelineCard: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 24,
     padding: 16,
     marginHorizontal: 16,
   },
   timelineImage: {
-    width: '100%',
+    width: "100%",
     height: 250,
     borderRadius: 20,
     elevation: 4,
@@ -90,6 +80,15 @@ const styles = StyleSheet.create({
   timelineCardContent: {
     paddingTop: 16,
     paddingHorizontal: 8,
+  },
+  timelineCardImageBlurHashContainer: {
+    width: "100%",
+    height: 250,
+    borderRadius: 20,
+    overflow: "hidden",
+    position: "absolute",
+    marginHorizontal: 16,
+    marginTop: 16,
   },
 });
 
