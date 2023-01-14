@@ -24,7 +24,6 @@ const Avatar = ({src, size = "M"}: AvatarProps) => {
         ...avatarSize,
         borderRadius: 100,
       }}
-      
       source={{
         uri: src,
         priority: FastImage.priority.normal,

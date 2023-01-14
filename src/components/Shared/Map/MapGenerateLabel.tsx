@@ -1,33 +1,32 @@
-import React from 'react';
-import ThemeText from '~components/widgets/ThemeText';
+import React from "react";
+import ThemeText from "~components/widgets/ThemeText";
 import {
   StyleSheet,
   View,
   Dimensions,
   ActivityIndicator,
   Pressable,
-} from 'react-native';
-import {StyleConstants} from '~utils/styles/constants';
-import {useTheme} from '~utils/styles/ThemeManager';
-import Button from '~components/widgets/Button';
-import {useNavigation} from '@react-navigation/native';
-import {useGeocodingQuery} from '~utils/queryHooks/geocoding';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+} from "react-native";
+import { StyleConstants } from "~utils/styles/constants";
+import { useTheme } from "~utils/styles/ThemeManager";
+import { useNavigation } from "@react-navigation/native";
+import { useGeocodingQuery } from "~utils/queryHooks/geocoding";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-const device = Dimensions.get('window');
+const device = Dimensions.get("window");
 
 type MapGenerateLabelProps = {
   pinPoint: PetSentry.CoordinatesProps;
   getMapInfo: (mapAddress: string) => void;
 };
 
-const MapGenerateLabel = ({pinPoint, getMapInfo}: MapGenerateLabelProps) => {
-  const {colors} = useTheme();
+const MapGenerateLabel = ({ pinPoint, getMapInfo }: MapGenerateLabelProps) => {
+  const { colors } = useTheme();
   const navigation = useNavigation();
 
   const query = `${pinPoint?.latitude}, ${pinPoint?.longitude}`;
 
-  const {isLoading, data} = useGeocodingQuery({
+  const { isLoading, data } = useGeocodingQuery({
     coordinates: query,
   });
 
@@ -42,22 +41,24 @@ const MapGenerateLabel = ({pinPoint, getMapInfo}: MapGenerateLabelProps) => {
     <>
       <View style={styles.mapSearchView}>
         <View style={styles.mapSearchHeader}>
-          {isLoading && (
-            <View style={{position: 'absolute', zIndex: 9, left: 16, top: 10}}>
-              <ActivityIndicator color={colors.primary} size={'large'} />
-            </View>
-          )}
           <ThemeText
-            style={{flex: 1}}
-            color={isLoading ? colors.textDisable : '#000'}
-            numberOfLines={1}>
-            {data || 'Please pin your location on map.'}
+            style={{ flex: 1, marginRight: 8 }}
+            color={isLoading ? colors.textDisable : "#000"}
+            numberOfLines={1}
+          >
+            {data || "Please pin your location on map."}
           </ThemeText>
           <Pressable
-            disabled={isLoading || data == ''}
+            disabled={isLoading || data == ""}
             onPress={onConfirmMapInfo}
             children={() => (
-              <Ionicons name="md-close" color={'#ddd'} size={18} />
+              <>
+                {isLoading ? (
+                  <ActivityIndicator color={colors.primary} size={"small"} />
+                ) : (
+                  <Ionicons name="md-checkmark" color="green" size={24} />
+                )}
+              </>
             )}
           />
         </View>
@@ -68,24 +69,25 @@ const MapGenerateLabel = ({pinPoint, getMapInfo}: MapGenerateLabelProps) => {
 
 const styles = StyleSheet.create({
   mapSearchView: {
-    position: 'absolute',
-    top: 60,
+    position: "absolute",
+    top: 40,
     zIndex: 9,
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   mapSearchHeader: {
     width: device?.width - 48,
-    padding: StyleConstants.Spacing.M,
-    backgroundColor: '#fff',
+    paddingVertical: StyleConstants.Spacing.S + 4,
+    paddingHorizontal: StyleConstants.Spacing.M,
+    backgroundColor: "#fff",
     elevation: 10,
     borderRadius: 100,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   chooseButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 10,
     right: 16,
     zIndex: 9,

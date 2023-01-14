@@ -55,7 +55,7 @@ const NeatlyImage = ({
   };
 
   return (
-    <>
+    <View>
       <FastImage
         source={{
           uri: uri.remote,
@@ -64,7 +64,7 @@ const NeatlyImage = ({
         onLoad={imageOnLoad}
       />
       {blurhashView()}
-    </>
+    </View>
   );
 };
 

@@ -8,6 +8,9 @@ import { useTheme } from "~utils/styles/ThemeManager";
 import { StyleConstants } from "~utils/styles/constants";
 import moment from "moment";
 import NeatlyImage from "~components/widgets/NeatlyImage";
+import { extractShortLocation } from "~utils/helpers/extractShortLocation";
+import Avatar from "~components/Avatar";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const TimelineCard = ({ item }: { item: any }) => {
   const { colors } = useTheme();
@@ -29,15 +32,37 @@ const TimelineCard = ({ item }: { item: any }) => {
         },
       ]}
     >
-      <NeatlyImage
-        uri={{
-          remote:
-            "https://images.pexels.com/photos/7726294/pexels-photo-7726294.jpeg?auto=compress&cs=tinysrgb&w=600",
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingBottom: StyleConstants.Spacing.S,
         }}
-        imageStyle={styles.timelineImage}
-        blurHash="UNG[cp~p%0xC4:$eofX8n$IoIpayPCNboJni"
-        containerStyle={styles.timelineCardImageBlurHashContainer}
-      />
+      >
+        <Avatar src={item?._owner?.profileUrl} size="S" />
+        <View style={{ marginLeft: StyleConstants.Spacing.S }}>
+          <ThemeText>{item?._owner?.fullname}</ThemeText>
+          <ThemeText fontStyle={"XS"} color={"rgba(0, 0, 0, 0.7)"}>
+            <Ionicons
+              name="md-location"
+              size={14}
+              color={"rgba(0, 0, 0, 0.7)"}
+            />
+            {extractShortLocation(item?.geolocation?.address)}
+          </ThemeText>
+        </View>
+      </View>
+      {Array.isArray(item?.photos) && item?.photos?.length >= 1 && (
+        <NeatlyImage
+          uri={{
+            remote: item?.photos[0]?.url,
+          }}
+          imageStyle={styles.timelineImage}
+          blurHash={item?.photos[0]?.blurHashValue}
+          containerStyle={styles.timelineCardImageBlurHashContainer}
+        />
+      )}
+
       <View style={styles.timelineCardContent}>
         <View
           style={{
@@ -46,7 +71,7 @@ const TimelineCard = ({ item }: { item: any }) => {
             justifyContent: "space-between",
           }}
         >
-          <ThemeText fontStyle="L" fontWeight={"Medium"} color={colors.primary}>
+          <ThemeText fontStyle="M" fontWeight={"Medium"} color={colors.primary}>
             {item?.petName}
           </ThemeText>
           <ThemeText fontStyle={"XS"} color={"rgba(0, 0, 0, 0.6)"}>
@@ -55,7 +80,7 @@ const TimelineCard = ({ item }: { item: any }) => {
         </View>
 
         {(item?.information || item?.specialTraits) && (
-          <ThemeText fontStyle={"S"} fontWeight={"Light"} numberOfLines={2}>
+          <ThemeText fontWeight={"Light"} numberOfLines={2}>
             {item?.information || item?.specialTraits}
           </ThemeText>
         )}
@@ -78,7 +103,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   timelineCardContent: {
-    paddingTop: 16,
+    paddingTop: 12,
     paddingHorizontal: 8,
   },
   timelineCardImageBlurHashContainer: {
@@ -87,8 +112,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "hidden",
     position: "absolute",
-    marginHorizontal: 16,
-    marginTop: 16,
   },
 });
 
