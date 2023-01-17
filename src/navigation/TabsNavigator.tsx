@@ -3,9 +3,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {ScreenTabsStackParamList} from '~utils/navigation/navigators';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import TabTimeline from '~screens/Tabs/Timeline';
-import TabPost from '~screens/Tabs/Post';
-import TabProfile from '~screens/Tabs/Profile';
+import TabTimeline from '~screens/Tabs/Timeline/Root';
+import TabPost from '~screens/Tabs/Post/Root';
+import TabProfile from '~screens/Tabs/Profile/Root';
 
 import {useTheme} from '~utils/styles/ThemeManager';
 import {Image, StyleSheet, View} from 'react-native';

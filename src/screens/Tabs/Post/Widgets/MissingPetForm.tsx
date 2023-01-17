@@ -24,7 +24,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleConstants } from '~utils/styles/constants';
 import { useMissingPetMutation } from '~utils/queryHooks/timeline';
-import { TabTimelineParamList } from '~utils/navigation/navigators';
+import { RootStackParamList, TabTimelineParamList } from '~utils/navigation/navigators';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 /** JSON Data */
@@ -37,7 +37,7 @@ import { useMapState } from '~utils/states/map.state';
 import shallow from 'zustand/shallow';
 
 const MissingPetForm = () => {
-  const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'Timeline-Detail'>>();
 
   const [pickedCoordinates, addressName] = useMapState(
     state => [state.pickedCoordinates, state.addressName],
@@ -96,8 +96,10 @@ const MissingPetForm = () => {
   };
 
   const { mutate: missingPetAction, isLoading } = useMissingPetMutation({
-    onSuccess: () => {
-      console.log('LoL Success');
+    onSuccess: (data) => {
+      navigation.navigate("Timeline-Detail", {
+        petId: data?._id
+      })
     },
     onError: error => {
       console.log('mutation error', error);
@@ -105,22 +107,6 @@ const MissingPetForm = () => {
   });
 
   const onSubmitMissingPet = () => {
-    // const data = {
-    //   petName,
-    //   petType,
-    //   gender,
-    //   activityType: 'Missing',
-    //   collarColor: collarColor || null,
-    //   missingPlace: addressName,
-    //   geolocation: [pickedCoordinates.longitude, pickedCoordinates.latitude],
-    //   information: comment,
-    //   specialTraits: traits,
-    //   activityDate: date,
-    //   photos: petPhotos
-    // };
-
-    // console.log('Data', JSON.stringify(data, null, 2));
-
     return missingPetAction({
       petName,
       petType,
@@ -166,7 +152,7 @@ const MissingPetForm = () => {
           //   pickedCoordinates?.longitude == 0
           // }
           onPress={() =>
-            navigation.navigate('Tab-Shared-Map', {
+            navigation.navigate('Map', {
               isPin: true,
               point: {
                 latitude: pickedCoordinates?.latitude,

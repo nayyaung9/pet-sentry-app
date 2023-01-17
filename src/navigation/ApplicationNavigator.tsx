@@ -8,6 +8,9 @@ import {useTheme} from '~utils/styles/ThemeManager';
 import AuthenticationRoot from '~screens/Authentication/Root';
 import {useAuthState} from '~utils/states/auth.state';
 import {getCredential} from '~utils/storage/keychain';
+import TimelineDetail from '~screens/Tabs/Timeline/TimelineDetail';
+import PostForm from '~screens/Tabs/Post/PostForm';
+import Map from "~screens/Map/Map";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -49,11 +52,28 @@ const ApplicationNavigator = () => {
                 options={{headerShown: false}}
               />
             ) : (
-              <Stack.Screen
-                name="Screen-Tabs"
-                component={ScreenTabs}
-                options={{headerShown: false}}
-              />
+              <>
+                <Stack.Screen
+                  name="Screen-Tabs"
+                  component={ScreenTabs}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="Timeline-Detail"
+                  component={TimelineDetail}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="Timeline-Post-Form"
+                  component={PostForm}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen 
+                  name="Map"
+                  component={Map}
+                  options={{headerShown: false}}
+                />
+              </>
             )}
           </Stack.Navigator>
         )}

@@ -5,6 +5,19 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 export type RootStackParamList = {
   Authentication: NavigatorScreenParams<AuthStackParamList>;
   'Screen-Tabs': NavigatorScreenParams<ScreenTabsStackParamList>;
+  'Timeline-Detail': {
+    petId: string | undefined;
+  };
+  'Timeline-Post-Form': {
+    actionType: string;
+  };
+  "Map": {
+    isPin?: boolean;
+    point?: {
+      latitude: Number | null;
+      longitude: Number | null;
+    };
+  };
 };
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
@@ -25,9 +38,9 @@ export type TabSharedStackParamList = {
   'Tab-Shared-Map': {
     isPin?: boolean;
     point?: {
-      latitude: Number | null,
-      longitude: Number | null,
-    }
+      latitude: Number | null;
+      longitude: Number | null;
+    };
   };
 };
 export type TabSharedStackScreenProps<T extends keyof TabSharedStackParamList> =
@@ -36,19 +49,13 @@ export type TabSharedStackScreenProps<T extends keyof TabSharedStackParamList> =
 // Tabs
 export type TabTimelineParamList = {
   'Tab-Timeline-Root': undefined;
-  'Tab-Timeline-Detail': {
-    petId: string;
-    petName: string;
-  };
-} & TabSharedStackParamList;
+}; 
+
 export type TabTimelineStackScreenProps<T extends keyof TabTimelineParamList> =
   NativeStackScreenProps<TabTimelineParamList, T>;
 
 export type TabPostParamList = {
   'Tab-Post-Root': undefined;
-  'Tab-Post-Form': {
-    actionType: string;
-  };
 } & TabSharedStackParamList;
 
 export type TabProfileParamList = {

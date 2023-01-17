@@ -6,9 +6,7 @@ import ThemeText from '~components/widgets/ThemeText';
 import {useTheme} from '~utils/styles/ThemeManager';
 import HeaderLeft from '~components/Header/Left';
 import {useGeoState} from '~utils/states/geo.state';
-import {TabTimelineParamList} from '~utils/navigation/navigators';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackScreenProps} from '~utils/navigation/navigators';
 import HeaderRight from '~components/Header/Right';
 import {StyleConstants} from '~utils/styles/constants';
 import {useMapState} from '~utils/states/map.state';
@@ -22,11 +20,9 @@ const renderScene = SceneMap({
   second: Route,
 });
 
-const TimelineRoot = () => {
+const TimelineRoot: React.FC = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
   const geocoderLocation = useGeoState(state => state.location);
   const pickedCoordinates = useMapState(state => state.pickedCoordinates);
-
-  const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
 
   const layout = useWindowDimensions();
   const {colors} = useTheme();
@@ -77,7 +73,7 @@ const TimelineRoot = () => {
         </View>
         <HeaderRight
           onPress={() =>
-            navigation.navigate('Tab-Shared-Map', {
+            navigation.navigate('Map', {
               isPin: false,
               point: {
                 latitude: pickedCoordinates?.latitude,

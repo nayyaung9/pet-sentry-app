@@ -1,8 +1,7 @@
 import React, {useCallback} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {StyleSheet, View, BackHandler} from 'react-native';
-import {TabPostParamList} from '~utils/navigation/navigators';
+import {RootStackScreenProps} from '~utils/navigation/navigators';
 import {StyleConstants} from '~utils/styles/constants';
 
 import FoundPetForm from './Widgets/FoundPetForm';
@@ -11,7 +10,7 @@ import shallow from 'zustand/shallow';
 import {useGeoState} from '~utils/states/geo.state';
 import {useMapState} from '~utils/states/map.state';
 
-type ParamsProps = NativeStackScreenProps<TabPostParamList, 'Tab-Post-Form'>;
+type ParamsProps = RootStackScreenProps<'Timeline-Post-Form'>;
 
 interface ComponentProps {
   [key: string]: React.ReactNode;

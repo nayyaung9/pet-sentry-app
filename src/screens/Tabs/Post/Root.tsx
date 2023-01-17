@@ -1,9 +1,7 @@
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Button from '~components/widgets/Button';
-import {TabPostParamList} from '~utils/navigation/navigators';
+import {RootStackScreenProps} from '~utils/navigation/navigators';
 import {StyleConstants} from '~utils/styles/constants';
 
 const activities = [
@@ -11,8 +9,9 @@ const activities = [
   {id: 2, label: 'Report Found', type: 'found'},
 ];
 
-const Post: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<TabPostParamList>>();
+const Post: React.FC = ({
+  navigation,
+}: RootStackScreenProps<'Timeline-Post-Form'>) => {
   return (
     <View style={styles.root}>
       {activities?.map((activity, index) => (
@@ -20,7 +19,9 @@ const Post: React.FC = () => {
           key={index}
           title={activity?.label}
           onPress={() =>
-            navigation.navigate('Tab-Post-Form', {actionType: activity?.type})
+            navigation.navigate('Timeline-Post-Form', {
+              actionType: activity?.type,
+            })
           }
           style={{width: '100%'}}
         />

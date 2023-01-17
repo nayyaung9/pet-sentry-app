@@ -15,37 +15,30 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
-import {
-  TabTimelineParamList,
-  TabTimelineStackScreenProps,
-} from '~utils/navigation/navigators';
+import {RootStackScreenProps} from '~utils/navigation/navigators';
 import {useTimelineDetailQuery} from '~utils/queryHooks/timeline';
 import moment from 'moment';
 import PetOwner from '~components/PetOwner';
 import MenuRow from '~components/MenuRow';
+import NeatlyImage from '~components/widgets/NeatlyImage';
 
 const DEVICE = Dimensions.get('window');
 
-const TimelineDetail: React.FC<
-  TabTimelineStackScreenProps<'Tab-Timeline-Detail'>
-> = ({
+const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
   route: {
     params: {petId},
   },
+  navigation,
 }) => {
   const {colors} = useTheme();
-  const navigation = useNavigation<StackNavigationProp<TabTimelineParamList>>();
 
   const {data, isLoading, error} = useTimelineDetailQuery({
     id: petId,
   });
 
   const isOwnerExist = data?._owner && Object.keys(data?._owner).length > 1;
-  console.log('data', JSON.stringify(data, null, 2));
   return (
     <View style={{flex: 1}}>
       <StatusBar
@@ -65,10 +58,15 @@ const TimelineDetail: React.FC<
       <ScrollView
         style={{flex: 1, backgroundColor: colors.primary}}
         showsVerticalScrollIndicator={false}>
-        <ImageBackground
-          style={styles.petImageContainer}
-          source={require('~assets/images/pet_demo.jpg')}
-        />
+        {data?.photos?.length >= 1 && (
+          <NeatlyImage
+            uri={{
+              remote: data?.photos[0]?.url,
+            }}
+            imageStyle={styles.petImageContainer}
+            blurHash={data?.photos[0]?.blurHashValue}
+          />
+        )}
 
         <View style={styles.contentContainer}>
           {isLoading ? (
@@ -227,9 +225,13 @@ const TimelineDetail: React.FC<
             title="View on Map"
             icon={'md-map'}
             onPress={() =>
-              navigation.navigate('Tab-Shared-Map', {isPin: false, point: {
-                latitude: data?.geolocation?.coordinates[1], longitude: data?.geolocation?.coordinates[0]
-              }})
+              navigation.navigate('Map', {
+                isPin: false,
+                point: {
+                  latitude: data?.geolocation?.coordinates[1],
+                  longitude: data?.geolocation?.coordinates[0],
+                },
+              })
             }
           />
         </View>

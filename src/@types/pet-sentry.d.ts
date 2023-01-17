@@ -9,6 +9,7 @@ declare namespace PetSentry {
   };
 
   type MissingPetInputDTO = {
+    _id?: string;
     petName: string;
     petType: string;
     gender: string;

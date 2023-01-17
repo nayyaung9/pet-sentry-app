@@ -11,7 +11,6 @@ const Profile: React.FC = () => {
   const setCredential = useAuthState(state => state.setCredential);
   const onLogout = async () => {
     const status = await clearCredential();
-    console.log('status', status);
     setCredential(null);
   };
   return (

@@ -1,4 +1,4 @@
-import React, {useCallback, useRef} from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,17 +7,18 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {StyleConstants} from '~utils/styles/constants';
+import { StyleConstants } from '~utils/styles/constants';
 import Button from './widgets/Button';
 import ThemeText from './widgets/ThemeText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '~utils/styles/ThemeManager';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { useTheme } from '~utils/styles/ThemeManager';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import apiInstance from '~utils/api/instance';
 import axios from 'axios';
+import NeatlyImage from './widgets/NeatlyImage';
 
-const PhotoUploader = ({petPhotos, setPetPhotos}: any) => {
-  const {colors} = useTheme();
+const PhotoUploader = ({ petPhotos, setPetPhotos }: any) => {
+  const { colors } = useTheme();
   const photoUploadRef = useRef<any>(null);
 
   const onPickFromImageLibrary = async () => {
@@ -36,7 +37,7 @@ const PhotoUploader = ({petPhotos, setPetPhotos}: any) => {
     );
 
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      const result = await launchCamera({mediaType: 'photo'});
+      const result = await launchCamera({ mediaType: 'photo' });
 
       if (result?.assets) {
         onPerformPhoto(result?.assets[0]);
@@ -57,20 +58,19 @@ const PhotoUploader = ({petPhotos, setPetPhotos}: any) => {
     let match = /\.(\w+)$/.exec(filename);
     let type = match ? `image/${match[1]}` : 'image';
 
-    formData.append('photo', {uri: localUri, name: filename, type});
+    formData.append('photo', { uri: localUri, name: filename, type });
 
     try {
-      const {data: response} = await apiInstance.post(
+      const { data: response } = await apiInstance.post(
         '/pets/image-upload',
         formData,
         {
-          headers: {'Content-Type': 'multipart/form-data'},
+          headers: { 'Content-Type': 'multipart/form-data' },
         },
       );
 
       if (response?.data) {
-        const {url} = response?.data;
-        setPetPhotos([...petPhotos, url]);
+        setPetPhotos([...petPhotos, response?.data]);
       }
     } catch (err) {
       console.log('UPload Error', err);
@@ -101,16 +101,16 @@ const PhotoUploader = ({petPhotos, setPetPhotos}: any) => {
           }}>
           {petPhotos?.map((image, index) => (
             <View key={index}>
-              <Image
-                source={{uri: image?.uri}}
-                style={{
-                  width: 50,
-                  height: 50,
-                  resizeMode: 'contain',
-                  marginRight: StyleConstants.Spacing.S,
-                  backgroundColor: colors.textDisable,
+              <NeatlyImage
+                uri={{
+                  remote: image?.url,
                 }}
+                imageStyle={[styles.uploadedImage, {
+                  backgroundColor: colors.textDisable,
+                }]}
+                blurHash={image?.blurHashValue}
               />
+
               <Pressable
                 onPress={() => onRemovePickedImages(index)}
                 style={{
@@ -219,5 +219,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: StyleConstants.Spacing.S,
   },
+
+  uploadedImage: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+    marginRight: StyleConstants.Spacing.S,
+  }
 });
 export default PhotoUploader;

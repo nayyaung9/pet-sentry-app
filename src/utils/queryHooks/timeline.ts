@@ -8,7 +8,7 @@ import { AxiosError } from 'axios';
 import apiInstance from '~utils/api/instance';
 
 type QueryKeyTimeline = ['Timeline', { activityType: string }];
-export type QueryKeyTimelineDetail = ['Timeline', { id: string }];
+export type QueryKeyTimelineDetail = ['Timeline', { id: string | undefined }];
 
 const queryFunction = async ({
   queryKey,
@@ -51,6 +51,7 @@ const useTimelineDetailQuery = ({
 
 /** Query for mutation Pet Missing and Found */
 type MutationVarsMissingPet = {
+  _id?: string;
   petName: string;
   petType: string;
   gender: string;
