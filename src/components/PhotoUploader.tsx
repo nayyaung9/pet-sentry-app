@@ -1,5 +1,11 @@
-import React, {useCallback, useRef, useState} from 'react';
-import {View, StyleSheet, Pressable, Image} from 'react-native';
+import React, {useCallback, useRef} from 'react';
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  Image,
+  PermissionsAndroid,
+} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {StyleConstants} from '~utils/styles/constants';
 import Button from './widgets/Button';
@@ -7,11 +13,12 @@ import ThemeText from './widgets/ThemeText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from '~utils/styles/ThemeManager';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import apiInstance from '~utils/api/instance';
+import axios from 'axios';
 
-const PhotoUploader = () => {
+const PhotoUploader = ({petPhotos, setPetPhotos}: any) => {
   const {colors} = useTheme();
-  const photoUploadRef = useRef<RBSheet>(null);
-  const [dummyImages, setDummyImage] = useState<string | string[]>([]);
+  const photoUploadRef = useRef<any>(null);
 
   const onPickFromImageLibrary = async () => {
     const result = await launchImageLibrary({
@@ -19,53 +26,83 @@ const PhotoUploader = () => {
     });
 
     if (result?.assets) {
-      const {uri} = result?.assets[0];
-      onPerformPhoto(uri);
+      onPerformPhoto(result?.assets[0]);
     }
   };
 
   const onLaunchDeviceCamera = async () => {
-    const result = await launchCamera({mediaType: 'photo'});
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+    );
 
-    if (result?.assets) {
-      const {uri} = result?.assets[0];
-      onPerformPhoto(uri);
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      const result = await launchCamera({mediaType: 'photo'});
+
+      if (result?.assets) {
+        onPerformPhoto(result?.assets[0]);
+      }
     }
   };
 
-  const onPerformPhoto = (imageUrl: string) => {
+  const onPerformPhoto = async (image: any) => {
     if (photoUploadRef) {
       photoUploadRef?.current?.close();
     }
 
-    setDummyImage([...dummyImages, imageUrl]);
+    const formData = new FormData();
+
+    let localUri = image.uri;
+    let filename = localUri.split('/').pop();
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : 'image';
+
+    formData.append('photo', {uri: localUri, name: filename, type});
+
+    try {
+      const {data: response} = await apiInstance.post(
+        '/pets/image-upload',
+        formData,
+        {
+          headers: {'Content-Type': 'multipart/form-data'},
+        },
+      );
+
+      if (response?.data) {
+        const {url} = response?.data;
+        setPetPhotos([...petPhotos, url]);
+      }
+    } catch (err) {
+      console.log('UPload Error', err);
+    }
   };
 
   const onRemovePickedImages = useCallback(
     (index: number) => {
-      if (Array.isArray(dummyImages)) {
-        const removeImages = dummyImages?.filter(
+      if (Array.isArray(petPhotos)) {
+        const removeImages = petPhotos?.filter(
           (image, imgIndex) => imgIndex !== index,
         );
 
-        setDummyImage(removeImages);
+        setPetPhotos(removeImages);
       }
     },
-    [dummyImages],
+    [petPhotos],
   );
+
   return (
     <View>
-      {Array.isArray(dummyImages) && dummyImages?.length >= 1 && (
+      {Array.isArray(petPhotos) && petPhotos?.length >= 1 && (
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             marginTop: StyleConstants.Spacing.M,
           }}>
-          {dummyImages?.map((image, index) => (
+          {petPhotos?.map((image, index) => (
             <View key={index}>
               <Image
-                source={{uri: image}}
+                source={{uri: image?.uri}}
                 style={{
                   width: 50,
                   height: 50,
@@ -96,7 +133,7 @@ const PhotoUploader = () => {
       <Button
         title="Upload Photo"
         icon="md-camera-outline"
-        disabled={dummyImages?.length == 5}
+        disabled={petPhotos?.length == 5}
         onPress={() => photoUploadRef?.current?.open()}
       />
 
@@ -170,6 +207,7 @@ const styles = StyleSheet.create({
   },
   photoUploaderView: {
     flexDirection: 'column',
+    alignItems: 'center',
   },
   photoUploaderCard: {
     backgroundColor: 'rgba(236, 65, 122, 0.2)',
@@ -179,7 +217,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: StyleConstants.Spacing.M,
     borderRadius: 5,
-    marginBottom: StyleConstants.Spacing.M,
+    marginBottom: StyleConstants.Spacing.S,
   },
 });
 export default PhotoUploader;

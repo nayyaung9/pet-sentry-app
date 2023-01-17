@@ -41,6 +41,7 @@ const Gender = ({gender: selectedGender, onSelectGender}: GenderProps) => {
                   color={isSelectedGender ? '#fff' : colors.textSecondary}
                 />
                 <ThemeText
+                fontStyle={'S'}
                   color={isSelectedGender ? '#fff' : colors.textSecondary}
                   style={{paddingLeft: StyleConstants.Spacing.S}}>
                   {gender?.label}

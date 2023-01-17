@@ -227,7 +227,9 @@ const TimelineDetail: React.FC<
             title="View on Map"
             icon={'md-map'}
             onPress={() =>
-              navigation.navigate('Tab-Shared-Map', {isPin: false})
+              navigation.navigate('Tab-Shared-Map', {isPin: false, point: {
+                latitude: data?.geolocation?.coordinates[1], longitude: data?.geolocation?.coordinates[0]
+              }})
             }
           />
         </View>

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   ScrollView,
@@ -10,7 +10,7 @@ import {
 import DatePicker from 'react-native-date-picker';
 import Button from '~components/widgets/Button';
 import Gender from '~components/widgets/Gender';
-import Input, {InputState} from '~components/widgets/Input';
+import Input, { InputState } from '~components/widgets/Input';
 import ActionSheet from '~components/widgets/ActionSheet';
 import InputLabel from '~components/widgets/InputLabel';
 import ThemeText from '~components/widgets/ThemeText';
@@ -20,12 +20,12 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 /** Utils and Scripts */
 import moment from 'moment';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {StyleConstants} from '~utils/styles/constants';
-import {useMissingPetMutation} from '~utils/queryHooks/timeline';
-import {TabTimelineParamList} from '~utils/navigation/navigators';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { StyleConstants } from '~utils/styles/constants';
+import { useMissingPetMutation } from '~utils/queryHooks/timeline';
+import { TabTimelineParamList } from '~utils/navigation/navigators';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 /** JSON Data */
 import collar_colors from '~utils/constants/collar_colors.json';
@@ -33,7 +33,7 @@ import pet_types from '~utils/constants/pet_types.json';
 import genders from '~utils/constants/genders.json';
 
 /** States */
-import {useMapState} from '~utils/states/map.state';
+import { useMapState } from '~utils/states/map.state';
 import shallow from 'zustand/shallow';
 
 const MissingPetForm = () => {
@@ -50,6 +50,8 @@ const MissingPetForm = () => {
   const [petType, setPetType] = useState('');
   const [collarColor, setCollarColor] = useState('');
   const [gender, setGender] = useState(genders[0]?.value);
+
+  const [petPhotos, setPetPhotos] = useState<string | string[]>([]);
 
   const onSelectGender = (value: string) => setGender(value);
 
@@ -93,7 +95,7 @@ const MissingPetForm = () => {
     petTypeActionSheetRef.current?.close();
   };
 
-  const {mutate: missingPetAction, isLoading} = useMissingPetMutation({
+  const { mutate: missingPetAction, isLoading } = useMissingPetMutation({
     onSuccess: () => {
       console.log('LoL Success');
     },
@@ -114,29 +116,32 @@ const MissingPetForm = () => {
     //   information: comment,
     //   specialTraits: traits,
     //   activityDate: date,
+    //   photos: petPhotos
     // };
 
     // console.log('Data', JSON.stringify(data, null, 2));
+
     return missingPetAction({
       petName,
       petType,
       gender,
       activityType: 'Missing',
-      collarColor: collarColor || null,
+      collarColor,
       address: addressName,
       geolocation: [pickedCoordinates.longitude, pickedCoordinates.latitude],
       information: comment,
       specialTraits: traits,
       activityDate: date,
+      photos: petPhotos
     });
   };
 
   return (
     <ScrollView
-      style={{flex: 1}}
+      style={{ flex: 1 }}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{paddingVertical: StyleConstants.Spacing.M}}>
-      <Gender {...{gender, onSelectGender}} />
+      contentContainerStyle={{ paddingVertical: StyleConstants.Spacing.M }}>
+      <Gender {...{ gender, onSelectGender }} />
       <Input label="Pet name*" {...petNameInputProps} />
 
       <Select
@@ -153,7 +158,7 @@ const MissingPetForm = () => {
         </View>
       </Select>
 
-      <View style={{paddingBottom: StyleConstants.Spacing.M}}>
+      <View style={{ paddingBottom: StyleConstants.Spacing.M }}>
         <InputLabel>Missing here</InputLabel>
         <TouchableOpacity
           // disabled={
@@ -198,7 +203,7 @@ const MissingPetForm = () => {
       <InputLabel noPadding>
         The more photos you add, the better the search will work
       </InputLabel>
-      <PhotoUploader />
+      <PhotoUploader {...{petPhotos, setPetPhotos}} />
 
       <Input
         label="Special traits*"
@@ -206,7 +211,7 @@ const MissingPetForm = () => {
         helperText="Unusual color, behavior, etc"
       />
 
-      <View style={{paddingBottom: StyleConstants.Spacing.M}}>
+      <View style={{ paddingBottom: StyleConstants.Spacing.M }}>
         <InputLabel>Lost Date</InputLabel>
         <TouchableOpacity
           onPress={() => setOpen(true)}
@@ -231,9 +236,9 @@ const MissingPetForm = () => {
       <ActionSheet ref={actionSheetRef} dataCount={collar_colors}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingVertical: StyleConstants.Spacing.S}}
+          contentContainerStyle={{ paddingVertical: StyleConstants.Spacing.S }}
           data={collar_colors}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               style={styles.listItem}
               onPress={() => onHandleCollarColor(item)}>
@@ -246,9 +251,9 @@ const MissingPetForm = () => {
       <ActionSheet ref={petTypeActionSheetRef} dataCount={pet_types}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingVertical: StyleConstants.Spacing.S}}
+          contentContainerStyle={{ paddingVertical: StyleConstants.Spacing.S }}
           data={pet_types}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               style={styles.listItem}
               onPress={() => onHandlePetType(item)}>

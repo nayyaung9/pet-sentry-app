@@ -48,7 +48,7 @@ const TimelineCard = ({ item }: { item: any }) => {
               size={14}
               color={"rgba(0, 0, 0, 0.7)"}
             />
-            {extractShortLocation(item?.geolocation?.address)}
+             {extractShortLocation(item?.geolocation?.address)}
           </ThemeText>
         </View>
       </View>
