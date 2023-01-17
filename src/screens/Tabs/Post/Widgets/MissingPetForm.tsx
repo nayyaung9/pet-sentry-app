@@ -24,7 +24,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleConstants } from '~utils/styles/constants';
 import { useMissingPetMutation } from '~utils/queryHooks/timeline';
-import { RootStackParamList, TabTimelineParamList } from '~utils/navigation/navigators';
+import { RootStackParamList } from '~utils/navigation/navigators';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 /** JSON Data */
