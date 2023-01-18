@@ -11,8 +11,7 @@ import {
 import Button from '~components/widgets/Button';
 import ThemeText from '~components/widgets/ThemeText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
@@ -20,8 +19,9 @@ import {RootStackScreenProps} from '~utils/navigation/navigators';
 import {useTimelineDetailQuery} from '~utils/queryHooks/timeline';
 import moment from 'moment';
 import PetOwner from '~components/PetOwner';
-import MenuRow from '~components/MenuRow';
 import NeatlyImage from '~components/widgets/NeatlyImage';
+import {extractShortLocation} from '~utils/helpers/extractShortLocation';
+import IconLabel from '~components/widgets/IconLabel';
 
 const DEVICE = Dimensions.get('window');
 
@@ -40,11 +40,7 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
   const isOwnerExist = data?._owner && Object.keys(data?._owner).length > 1;
   return (
     <View style={{flex: 1}}>
-      <StatusBar
-        translucent
-        backgroundColor={'transparent'}
-        barStyle={'light-content'}
-      />
+      <StatusBar backgroundColor={'#fff'} barStyle={'dark-content'} />
       <View style={styles.header}>
         <Pressable
           onPress={() => navigation.goBack()}
@@ -55,7 +51,11 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
         />
       </View>
       <ScrollView
-        style={{flex: 1, backgroundColor: colors.primary}}
+        style={{
+          flex: 1,
+          backgroundColor: '#fff',
+          padding: StyleConstants.Spacing.M,
+        }}
         showsVerticalScrollIndicator={false}>
         {data?.photos?.length >= 1 && (
           <NeatlyImage
@@ -74,97 +74,81 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
             </View>
           ) : (
             <>
-              <View
-                style={[
-                  styles.petInfoCardRow,
-                  {
-                    backgroundColor: colors.primary,
-                    borderBottomWidth: 1,
-                    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-                  },
-                ]}>
-                <ThemeText
-                  style={{flex: 1}}
-                  fontStyle={'L'}
-                  numberOfLines={2}
-                  color={'#fff'}>
-                  {data?.petName}
-                </ThemeText>
-                <ThemeText color={'#fff'}>{data?.activityType}</ThemeText>
-              </View>
+              <View style={styles.petInfoCardRow}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <ThemeText
+                    style={{flex: 1}}
+                    fontWeight={'Medium'}
+                    fontStyle={'L'}
+                    numberOfLines={2}>
+                    {data?.petName}
+                  </ThemeText>
 
-              <View style={styles.cardContainer}>
-                <ThemeText color={'#fff'} fontStyle={'S'}>
-                  Basic Info
-                </ThemeText>
+                  <IconLabel
+                    iconComponent={Feather}
+                    iconName={'eye'}
+                    label={24}
+                    containerStyle={{justifyContent: 'flex-end'}}
+                    labelStyle={{ paddingLeft: StyleConstants.Spacing.S - 2}}
+                  />
+                </View>
 
-                <View style={styles.card}>
-                  <MenuRow
-                    isDisable={true}
-                    icon={
-                      <MaterialCommunityIcons
-                        name="gender-male-female"
-                        size={24}
-                        color={colors.primary}
-                      />
-                    }
-                    label="Gender"
-                    value={data?.gender ? 'Male' : 'Female'}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <IconLabel
+                    iconComponent={Ionicons}
+                    iconName={'location-outline'}
+                    label={extractShortLocation(data?.geolocation?.address)}
                   />
-                  <View
-                    style={{
-                      borderBottomWidth: 1,
-                      borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-                    }}
-                  />
-
-                  <MenuRow
-                    isDisable={true}
-                    icon={
-                      <Ionicons
-                        name="md-calendar-outline"
-                        size={24}
-                        color={colors.primary}
-                      />
-                    }
-                    label="Lost date"
-                    value={moment(data?.createdAt).format('MMM DDD YYYY')}
-                  />
-                  <View
-                    style={{
-                      borderBottomWidth: 1,
-                      borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-                    }}
-                  />
-
-                  {data?.collarColor != '' && (
-                    <>
-                      <MenuRow
-                        isDisable={true}
-                        icon={
-                          <FontAwesome
-                            name="paw"
-                            size={24}
-                            color={colors.primary}
-                          />
-                        }
-                        label="Collar color"
-                        value={data?.collarColor}
-                      />
-                    </>
-                  )}
+                  <ThemeText fontStyle={'S'}>{data?.activityType}</ThemeText>
                 </View>
               </View>
 
               <View style={styles.cardContainer}>
-                <ThemeText color={'#fff'} fontStyle={'S'}>
-                  {data?.activityType === 'Missing' ? 'Missing' : 'Found'} Info
-                </ThemeText>
-                <View
-                  style={[
-                    styles.card,
-                    {paddingVertical: StyleConstants.Spacing.S},
-                  ]}>
+                <View style={styles.basicInfoRow}>
+                  <View style={{flex: 1}}>
+                    <ThemeText
+                      color={colors.textSecondary}
+                      fontStyle={'XS'}
+                      style={{marginBottom: StyleConstants.Spacing.S}}>
+                      Gender
+                    </ThemeText>
+                    <ThemeText>{data?.gender ? 'Male' : 'Female'}</ThemeText>
+                  </View>
+                  <View style={{flex: 1}}>
+                    <ThemeText
+                      color={colors.textSecondary}
+                      fontStyle={'XS'}
+                      style={{marginBottom: StyleConstants.Spacing.S}}>
+                      Lost Date
+                    </ThemeText>
+                    <ThemeText>
+                      {moment(data?.createdAt).format('MMM DDD YYYY')}
+                    </ThemeText>
+                  </View>
+                  <View style={{flex: 1}}>
+                    <ThemeText
+                      color={colors.textSecondary}
+                      fontStyle={'XS'}
+                      style={{marginBottom: StyleConstants.Spacing.S}}>
+                      Collar color
+                    </ThemeText>
+                    <ThemeText>{data?.collarColor}</ThemeText>
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.cardContainer}>
+                <View style={styles.card}>
                   {data?.geolocation?.address != '' && (
                     <View style={{marginBottom: StyleConstants.Spacing.S}}>
                       <ThemeText
@@ -242,8 +226,9 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
 const styles = StyleSheet.create({
   header: {
     position: 'absolute',
-    top: 40,
+    top: 30,
     zIndex: 9,
+    paddingHorizontal: StyleConstants.Spacing.S,
     marginHorizontal: StyleConstants.Spacing.M,
   },
   loadingContainer: {
@@ -261,25 +246,26 @@ const styles = StyleSheet.create({
   },
   petImageContainer: {
     width: '100%',
-    height: DEVICE.height / 2.3,
+    height: DEVICE.height / 2.6,
+    borderRadius: 20,
   },
   petInfoCardRow: {
     flexDirection: 'column',
-    paddingHorizontal: StyleConstants.Spacing.M,
     paddingVertical: StyleConstants.Spacing.S,
   },
   contentContainer: {
     flexGrow: 1,
   },
   cardContainer: {
-    paddingHorizontal: StyleConstants.Spacing.M,
+    // paddingHorizontal: StyleConstants.Spacing.M,
     paddingVertical: StyleConstants.Spacing.S,
   },
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
     marginTop: StyleConstants.Spacing.S,
-    paddingHorizontal: StyleConstants.Spacing.M,
+  },
+  basicInfoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 export default TimelineDetail;

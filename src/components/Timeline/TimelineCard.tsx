@@ -35,7 +35,7 @@ const TimelineCard = ({item}: {item: any}) => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          paddingBottom: StyleConstants.Spacing.S,
+          paddingBottom: StyleConstants.Spacing.M,
         }}>
         <Avatar src={item?._owner?.profileUrl} />
         <View style={{marginLeft: StyleConstants.Spacing.S}}>
