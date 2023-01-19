@@ -10,7 +10,9 @@ import {useAuthState} from '~utils/states/auth.state';
 import {getCredential} from '~utils/storage/keychain';
 import TimelineDetail from '~screens/Tabs/Timeline/TimelineDetail';
 import PostForm from '~screens/Tabs/Post/PostForm';
-import Map from "~screens/Map/Map";
+import Map from '~screens/Map/Map';
+import HeaderLeft from '~components/Header/Left';
+import ThemeText from '~components/widgets/ThemeText';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -66,9 +68,18 @@ const ApplicationNavigator = () => {
                 <Stack.Screen
                   name="Timeline-Post-Form"
                   component={PostForm}
-                  options={{headerShown: false}}
+                  options={({route}: any) => ({
+                    headerTitle: () => (
+                      <ThemeText>{`${
+                        route.params.actionType === 'missing'
+                          ? 'Missing'
+                          : 'Found'
+                      } Pet`}</ThemeText>
+                    ),
+                    headerTitleAlign: 'center',
+                  })}
                 />
-                <Stack.Screen 
+                <Stack.Screen
                   name="Map"
                   component={Map}
                   options={{headerShown: false}}
