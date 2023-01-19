@@ -46,7 +46,7 @@ const TimelineCard = ({item}: {item: any}) => {
               size={14}
               color={'rgba(0, 0, 0, 0.7)'}
             />
-            <ThemeText fontStyle={'XS'} color={'rgba(0, 0, 0, 0.7)'}>
+            <ThemeText fontStyle={'XS'} fontWeight={'Medium'} color={'rgba(0, 0, 0, 0.4)'}>
               {extractShortLocation(item?.geolocation?.address)}
             </ThemeText>
           </View>
@@ -70,6 +70,7 @@ const TimelineCard = ({item}: {item: any}) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            paddingBottom: StyleConstants.Spacing.S
           }}>
           <ThemeText fontStyle="M" fontWeight={'Medium'} color={colors.primary}>
             {item?.petName}
@@ -80,7 +81,7 @@ const TimelineCard = ({item}: {item: any}) => {
         </View>
 
         {(item?.information || item?.specialTraits) && (
-          <ThemeText fontWeight={'Light'} numberOfLines={2}>
+          <ThemeText numberOfLines={2} color={"rgba(0, 0, 0, 0.4)"}>
             {item?.information || item?.specialTraits}
           </ThemeText>
         )}
@@ -92,9 +93,7 @@ const TimelineCard = ({item}: {item: any}) => {
 const styles = StyleSheet.create({
   timelineCard: {
     backgroundColor: '#fff',
-    borderRadius: 24,
-    padding: 16,
-    marginHorizontal: 16,
+    padding: StyleConstants.Spacing.M,
   },
   timelineImage: {
     width: '100%',

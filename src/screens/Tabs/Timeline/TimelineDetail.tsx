@@ -56,6 +56,7 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
           backgroundColor: '#fff',
           padding: StyleConstants.Spacing.M,
         }}
+        contentContainerStyle={{ paddingBottom: 20 }}
         showsVerticalScrollIndicator={false}>
         {data?.photos?.length >= 1 && (
           <NeatlyImage
@@ -94,7 +95,7 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
                     iconName={'eye'}
                     label={24}
                     containerStyle={{justifyContent: 'flex-end'}}
-                    labelStyle={{ paddingLeft: StyleConstants.Spacing.S - 2}}
+                    labelStyle={{paddingLeft: StyleConstants.Spacing.S - 2}}
                   />
                 </View>
 
@@ -116,19 +117,13 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
               <View style={styles.cardContainer}>
                 <View style={styles.basicInfoRow}>
                   <View style={{flex: 1}}>
-                    <ThemeText
-                      color={colors.textSecondary}
-                      fontStyle={'XS'}
-                      style={{marginBottom: StyleConstants.Spacing.S}}>
+                    <ThemeText color={colors.textSecondary} fontStyle={'XS'}>
                       Gender
                     </ThemeText>
                     <ThemeText>{data?.gender ? 'Male' : 'Female'}</ThemeText>
                   </View>
                   <View style={{flex: 1}}>
-                    <ThemeText
-                      color={colors.textSecondary}
-                      fontStyle={'XS'}
-                      style={{marginBottom: StyleConstants.Spacing.S}}>
+                    <ThemeText color={colors.textSecondary} fontStyle={'XS'}>
                       Lost Date
                     </ThemeText>
                     <ThemeText>
@@ -136,10 +131,7 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
                     </ThemeText>
                   </View>
                   <View style={{flex: 1}}>
-                    <ThemeText
-                      color={colors.textSecondary}
-                      fontStyle={'XS'}
-                      style={{marginBottom: StyleConstants.Spacing.S}}>
+                    <ThemeText color={colors.textSecondary} fontStyle={'XS'}>
                       Collar color
                     </ThemeText>
                     <ThemeText>{data?.collarColor}</ThemeText>
@@ -148,13 +140,10 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
               </View>
 
               <View style={styles.cardContainer}>
-                <View style={styles.card}>
+                <View>
                   {data?.geolocation?.address != '' && (
                     <View style={{marginBottom: StyleConstants.Spacing.S}}>
-                      <ThemeText
-                        color={colors.textSecondary}
-                        fontStyle={'XS'}
-                        style={{marginBottom: StyleConstants.Spacing.S}}>
+                      <ThemeText color={colors.textSecondary} fontStyle={'XS'}>
                         Missing here
                       </ThemeText>
                       <ThemeText>{data?.geolocation?.address}</ThemeText>
@@ -163,10 +152,7 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
 
                   {data?.information != '' && (
                     <View style={{marginBottom: StyleConstants.Spacing.S}}>
-                      <ThemeText
-                        color={colors.textSecondary}
-                        fontStyle={'XS'}
-                        style={{marginBottom: StyleConstants.Spacing.S}}>
+                      <ThemeText color={colors.textSecondary} fontStyle={'XS'}>
                         Information
                       </ThemeText>
                       <ThemeText>{data?.information}</ThemeText>
@@ -175,10 +161,7 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
 
                   {data?.specialTraits != '' && data?.specialTraits != null && (
                     <View>
-                      <ThemeText
-                        color={colors.textSecondary}
-                        fontStyle={'XS'}
-                        style={{marginBottom: StyleConstants.Spacing.S}}>
+                      <ThemeText color={colors.textSecondary} fontStyle={'XS'}>
                         Special Traits
                       </ThemeText>
                       <ThemeText>{data?.specialTraits}</ThemeText>
@@ -192,14 +175,12 @@ const TimelineDetail: React.FC<RootStackScreenProps<'Timeline-Detail'>> = ({
           {/* Pet Owner Component */}
           {isOwnerExist && (
             <View style={styles.cardContainer}>
-              <View style={styles.card}>
-                <PetOwner
-                  {...{
-                    ownerName: data?._owner?.fullname,
-                    ownerProfile: data?._owner?.profileUrl,
-                  }}
-                />
-              </View>
+              <PetOwner
+                {...{
+                  ownerName: data?._owner?.fullname,
+                  ownerProfile: data?._owner?.profileUrl,
+                }}
+              />
             </View>
           )}
           {/* Pet Owner Component */}
@@ -257,11 +238,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   cardContainer: {
-    // paddingHorizontal: StyleConstants.Spacing.M,
     paddingVertical: StyleConstants.Spacing.S,
-  },
-  card: {
-    marginTop: StyleConstants.Spacing.S,
   },
   basicInfoRow: {
     flexDirection: 'row',

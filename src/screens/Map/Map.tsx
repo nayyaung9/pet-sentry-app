@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import ThemeText from '~components/widgets/ThemeText';
-import {TabSharedStackScreenProps} from '~utils/navigation/navigators';
+import {RootStackScreenProps} from '~utils/navigation/navigators';
 import mapStyles from './mapStyles.json';
 import {useTheme} from '~utils/styles/ThemeManager';
 import HeaderLeft from '~components/Header/Left';
@@ -17,7 +17,7 @@ const initialRegion = {
   longitudeDelta: 0.0421,
 };
 
-const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
+const TabSharedMap: React.FC<RootStackScreenProps<'Map'>> = ({
   navigation,
   route: {
     params: {isPin = false, point},
@@ -105,6 +105,7 @@ const TabSharedMap: React.FC<TabSharedStackScreenProps<'Tab-Shared-Map'>> = ({
         customMapStyle={mapStyles}>
         {pinPoint && (
           <Marker
+          image={require('~assets/images/paw-pin.png')}
             coordinate={{
               latitude: pinPoint?.latitude as number,
               longitude: pinPoint?.longitude as number,

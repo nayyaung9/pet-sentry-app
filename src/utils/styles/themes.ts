@@ -17,8 +17,8 @@ const themeColors: {
   };
 } = {
   primary: {
-    light: '#ec417a',
-    // light: '#9f73fe',
+    // light: '#ec417a',
+    light: '#9f73fe',
     dark: '#282828',
   },
   background: {
