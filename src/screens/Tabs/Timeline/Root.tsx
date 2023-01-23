@@ -6,7 +6,7 @@ import ThemeText from '~components/widgets/ThemeText';
 import {useTheme} from '~utils/styles/ThemeManager';
 import HeaderLeft from '~components/Header/Left';
 import {useGeoState} from '~utils/states/geo.state';
-import {RootStackScreenProps} from '~utils/navigation/navigators';
+import {TimelineTabNavigationProps} from '~utils/navigation/navigators';
 import HeaderRight from '~components/Header/Right';
 import {StyleConstants} from '~utils/styles/constants';
 import {useMapState} from '~utils/states/map.state';
@@ -20,7 +20,7 @@ const renderScene = SceneMap({
   second: Route,
 });
 
-const TimelineRoot: React.FC = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
+const TimelineRoot: React.FC<TimelineTabNavigationProps> = ({ navigation }) => {
   const geocoderLocation = useGeoState(state => state.location);
   const pickedCoordinates = useMapState(state => state.pickedCoordinates);
 

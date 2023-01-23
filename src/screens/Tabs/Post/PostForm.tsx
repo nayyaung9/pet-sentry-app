@@ -9,7 +9,6 @@ import MissingPetForm from './Widgets/MissingPetForm';
 import shallow from 'zustand/shallow';
 import {useGeoState} from '~utils/states/geo.state';
 import {useMapState} from '~utils/states/map.state';
-import HeaderLeft from '~components/Header/Left';
 
 type ParamsProps = RootStackScreenProps<'Timeline-Post-Form'>;
 

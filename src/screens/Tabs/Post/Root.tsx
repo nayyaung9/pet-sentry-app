@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import ThemeText from '~components/widgets/ThemeText';
-import {RootStackScreenProps} from '~utils/navigation/navigators';
+import {PostTabNavigationProps} from '~utils/navigation/navigators';
 import {StyleConstants} from '~utils/styles/constants';
 import {useTheme} from '~utils/styles/ThemeManager';
 
@@ -32,14 +32,14 @@ const activities = [
   },
 ];
 
-const Post: React.FC = ({
-  navigation,
-}: RootStackScreenProps<'Timeline-Post-Form'>) => {
+const Post: React.FC<PostTabNavigationProps> = ({navigation}) => {
   const {colors} = useTheme();
   return (
     <View style={styles.root}>
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
-        <ThemeText color={'#fff'} fontStyle={'L'}>Activities</ThemeText>
+      <View style={[styles.header, {backgroundColor: colors.primary}]}>
+        <ThemeText color={'#fff'} fontStyle={'L'}>
+          Activities
+        </ThemeText>
       </View>
       <View style={styles.container}>
         {activities?.map((activity, index) => (
